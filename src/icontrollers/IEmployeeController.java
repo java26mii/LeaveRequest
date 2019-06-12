@@ -5,10 +5,22 @@
  */
 package icontrollers;
 
+import java.util.List;
+import models.Employee;
+
 /**
  *
  * @author Arif Fridasari
  */
 public interface IEmployeeController {
-    
+
+    public List<Employee> getAll();
+
+    public Employee getById(String id);
+
+    public List<Employee> search(Object keyword);
+
+    public String save(String id, String firstName, String lastName, String email, String phoneNumber, String manager);
+
+    public String delete(String id);
 }

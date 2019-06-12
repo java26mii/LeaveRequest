@@ -5,10 +5,23 @@
  */
 package icontrollers;
 
+import java.util.List;
+import models.AnnualLeave;
+
 /**
  *
  * @author Arif Fridasari
  */
 public interface IAnnualLeaveController {
-    
+
+    public List<AnnualLeave> getAll();
+
+    public AnnualLeave getById(String id);
+
+    public List<AnnualLeave> search(Object keyword);
+
+    public String save(String id, String remain, String taken);
+
+    public String delete(String id);
+
 }

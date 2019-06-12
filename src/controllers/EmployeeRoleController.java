@@ -7,8 +7,8 @@ package controllers;
 
 /**
  *
- * @author Arif Fridasari
+ * @author Arif Fridasaari
  */
-public class AccountControllers {
+public class EmployeeRoleController {
     
 }

@@ -5,10 +5,22 @@
  */
 package icontrollers;
 
+import java.util.List;
+import models.LeaveType;
+
 /**
  *
  * @author Arif Fridasari
  */
 public interface ILeaveTypeController {
-    
+
+    public List<LeaveType> getAll();
+
+    public LeaveType getById(String id);
+
+    public List<LeaveType> search(Object keyword);
+
+    public String save(String id, String name);
+
+    public String delete(String id);
 }

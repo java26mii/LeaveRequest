@@ -5,10 +5,22 @@
  */
 package icontrollers;
 
+import java.util.List;
+import models.Role;
+
 /**
  *
  * @author Arif Fridasari
  */
 public interface IRoleController {
-    
+
+    public List<Role> getAll();
+
+    public Role getById(String id);
+
+    public List<Role> search(Object keyword);
+
+    public String save(String id, String name);
+
+    public String delete(String id);
 }

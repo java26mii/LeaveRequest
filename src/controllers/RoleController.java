@@ -7,8 +7,8 @@ package controllers;
 
 /**
  *
- * @author  Arif Fridasari
+ * @author Arif Fridasari
  */
-public class AnnualLeaveControllers {
+public class RoleController {
     
 }

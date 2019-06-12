@@ -5,10 +5,22 @@
  */
 package icontrollers;
 
+import java.util.List;
+import models.Status;
+
 /**
  *
  * @author Arif Fridasari
  */
 public interface IStatusController {
-    
+
+    public List<Status> getAll();
+
+    public Status getById(String id);
+
+    public List<Status> search(Object keyword);
+
+    public String save(String id, String name, String statusDate);
+
+    public String delete(String id);
 }

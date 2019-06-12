@@ -7,8 +7,8 @@ package controllers;
 
 /**
  *
- * @author HP
+ * @author Arif Fridasari
  */
-public class LeaveRequestControllers {
+public class LeaveRequestController {
     
 }

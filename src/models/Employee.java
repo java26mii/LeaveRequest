@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Arif Fridasari
+ * @author KHAIRUL MUNA
  */
 @Entity
 @Table(name = "EMPLOYEES")
@@ -60,7 +60,7 @@ public class Employee implements Serializable {
     @Basic(optional = false)
     @Column(name = "IS_DELETE")
     private Character isDelete;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "employee1", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "employee", fetch = FetchType.LAZY)
     private LeaveRequest leaveRequest;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee", fetch = FetchType.LAZY)
     private List<EmployeeJob> employeeJobList;

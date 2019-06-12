@@ -60,5 +60,6 @@ Contributor(s):
     <mapping class="models.LeaveType"/>
     <mapping class="models.Role"/>
     <mapping class="models.Status"/>
+    <mapping class="models.LeaveRequestStatus"/>
   </session-factory>
 </hibernate-configuration>

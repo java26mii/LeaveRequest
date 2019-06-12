@@ -5,10 +5,22 @@
  */
 package icontrollers;
 
+import java.util.List;
+import models.EmployeeJob;
+
 /**
  *
  * @author Arif Fridasari
  */
 public interface IEmployeeJobController {
-    
+
+    public List<EmployeeJob> getAll();
+
+    public EmployeeJob getById(String id);
+
+    public List<EmployeeJob> search(Object keyword);
+
+    public String save(String id, String employee, String job);
+
+    public String delete(String id);
 }

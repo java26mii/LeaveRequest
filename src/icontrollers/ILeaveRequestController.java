@@ -5,10 +5,23 @@
  */
 package icontrollers;
 
+import java.util.List;
+import tools.LeaveRequest;
+
 /**
  *
  * @author Arif Fridasari
  */
 public interface ILeaveRequestController {
-    
+
+    public List<LeaveRequest> getAll();
+
+    public LeaveRequest getById(String id);
+
+    public List<LeaveRequest> search(Object keyword);
+
+    public String save(String id, String startDate, String endDate, String type, String detail, 
+            String requester, String manager, String status);
+
+    public String delete(String id);
 }

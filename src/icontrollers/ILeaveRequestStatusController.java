@@ -5,10 +5,22 @@
  */
 package icontrollers;
 
+import java.util.List;
+import models.LeaveRequestStatus;
+
 /**
  *
  * @author Arif Fridasari
  */
 public interface ILeaveRequestStatusController {
-    
+
+    public List<LeaveRequestStatus> getAll();
+
+    public LeaveRequestStatus getById(String id);
+
+    public List<LeaveRequestStatus> search(Object keyword);
+
+    public String save(String id, String leaveRequest, String status);
+
+    public String delete(String id);
 }
