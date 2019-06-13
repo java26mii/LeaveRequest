@@ -20,7 +20,7 @@ public interface ILeaveRequestStatusController {
 
     public List<LeaveRequestStatus> search(Object keyword);
 
-    public String save(String id, String leaveRequest, String status);
+    public String save(String id, String leaveRequest, String status, String statusDate);
 
     public String delete(String id);
 }

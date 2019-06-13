@@ -6,7 +6,6 @@
 package models;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -18,14 +17,12 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author KHAIRUL MUNA
+ * @author Arif Fridasari
  */
 @Entity
 @Table(name = "STATUS")
@@ -34,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Status.findAll", query = "SELECT s FROM Status s")
     , @NamedQuery(name = "Status.findById", query = "SELECT s FROM Status s WHERE s.id = :id")
     , @NamedQuery(name = "Status.findByName", query = "SELECT s FROM Status s WHERE s.name = :name")
-    , @NamedQuery(name = "Status.findByStatusDate", query = "SELECT s FROM Status s WHERE s.statusDate = :statusDate")})
+    , @NamedQuery(name = "Status.findByIsDelete", query = "SELECT s FROM Status s WHERE s.isDelete = :isDelete")})
 public class Status implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,9 +43,8 @@ public class Status implements Serializable {
     @Column(name = "NAME")
     private String name;
     @Basic(optional = false)
-    @Column(name = "STATUS_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date statusDate;
+    @Column(name = "IS_DELETE")
+    private Character isDelete;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "status", fetch = FetchType.LAZY)
     private List<LeaveRequestStatus> leaveRequestStatusList;
 
@@ -59,10 +55,15 @@ public class Status implements Serializable {
         this.id = id;
     }
 
-    public Status(Long id, String name, Date statusDate) {
+    public Status(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.statusDate = statusDate;
+    }
+
+    public Status(Long id, String name, Character isDelete) {
+        this.id = id;
+        this.name = name;
+        this.isDelete = isDelete;
     }
 
     public Long getId() {
@@ -81,12 +82,12 @@ public class Status implements Serializable {
         this.name = name;
     }
 
-    public Date getStatusDate() {
-        return statusDate;
+    public Character getIsDelete() {
+        return isDelete;
     }
 
-    public void setStatusDate(Date statusDate) {
-        this.statusDate = statusDate;
+    public void setIsDelete(Character isDelete) {
+        this.isDelete = isDelete;
     }
 
     @XmlTransient
@@ -122,5 +123,5 @@ public class Status implements Serializable {
     public String toString() {
         return "models.Status[ id=" + id + " ]";
     }
-    
+
 }

@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author KHAIRUL MUNA
+ * @author Arif Fridasari
  */
 @Entity
 @Table(name = "LEAVE_REQUESTS")
@@ -38,9 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "LeaveRequest.findById", query = "SELECT l FROM LeaveRequest l WHERE l.id = :id")
     , @NamedQuery(name = "LeaveRequest.findByStartDate", query = "SELECT l FROM LeaveRequest l WHERE l.startDate = :startDate")
     , @NamedQuery(name = "LeaveRequest.findByEndDate", query = "SELECT l FROM LeaveRequest l WHERE l.endDate = :endDate")
-    , @NamedQuery(name = "LeaveRequest.findByDetail", query = "SELECT l FROM LeaveRequest l WHERE l.detail = :detail")
-    , @NamedQuery(name = "LeaveRequest.findByRequester", query = "SELECT l FROM LeaveRequest l WHERE l.requester = :requester")
-    , @NamedQuery(name = "LeaveRequest.findByManager", query = "SELECT l FROM LeaveRequest l WHERE l.manager = :manager")})
+    , @NamedQuery(name = "LeaveRequest.findByNotes", query = "SELECT l FROM LeaveRequest l WHERE l.notes = :notes")
+    , @NamedQuery(name = "LeaveRequest.findByIsDelete", query = "SELECT l FROM LeaveRequest l WHERE l.isDelete = :isDelete")})
 public class LeaveRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,14 +56,14 @@ public class LeaveRequest implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
     @Basic(optional = false)
-    @Column(name = "DETAIL")
-    private String detail;
+    @Column(name = "NOTES")
+    private String notes;
     @Basic(optional = false)
-    @Column(name = "REQUESTER")
-    private long requester;
-    @Basic(optional = false)
-    @Column(name = "MANAGER")
-    private long manager;
+    @Column(name = "IS_DELETE")
+    private Character isDelete;
+    @JoinColumn(name = "REQUESTER", referencedColumnName = "ID")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Employee requester;
     @JoinColumn(name = "ID", referencedColumnName = "ID", insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Employee employee;
@@ -84,13 +83,12 @@ public class LeaveRequest implements Serializable {
         this.id = id;
     }
 
-    public LeaveRequest(Long id, Date startDate, Date endDate, String detail, long requester, long manager) {
+    public LeaveRequest(Long id, Date startDate, Date endDate, String notes, Character isDelete) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.detail = detail;
-        this.requester = requester;
-        this.manager = manager;
+        this.notes = notes;
+        this.isDelete = isDelete;
     }
 
     public Long getId() {
@@ -117,28 +115,28 @@ public class LeaveRequest implements Serializable {
         this.endDate = endDate;
     }
 
-    public String getDetail() {
-        return detail;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setDetail(String detail) {
-        this.detail = detail;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
-    public long getRequester() {
+    public Character getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Character isDelete) {
+        this.isDelete = isDelete;
+    }
+
+    public Employee getRequester() {
         return requester;
     }
 
-    public void setRequester(long requester) {
+    public void setRequester(Employee requester) {
         this.requester = requester;
-    }
-
-    public long getManager() {
-        return manager;
-    }
-
-    public void setManager(long manager) {
-        this.manager = manager;
     }
 
     public Employee getEmployee() {

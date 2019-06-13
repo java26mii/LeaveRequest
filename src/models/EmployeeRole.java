@@ -45,6 +45,12 @@ public class EmployeeRole implements Serializable {
     public EmployeeRole() {
     }
 
+    public EmployeeRole(Long id, Role role, Employee employee) {
+        this.id = id;
+        this.employee = employee;
+        this.role = role;
+    }
+
     public EmployeeRole(Long id) {
         this.id = id;
     }
@@ -97,5 +103,5 @@ public class EmployeeRole implements Serializable {
     public String toString() {
         return "models.EmployeeRole[ id=" + id + " ]";
     }
-    
+
 }

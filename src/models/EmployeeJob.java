@@ -45,6 +45,12 @@ public class EmployeeJob implements Serializable {
     public EmployeeJob() {
     }
 
+    public EmployeeJob(Long id, Employee employee, Job job) {
+        this.id = id;
+        this.employee = employee;
+        this.job = job;
+    }
+
     public EmployeeJob(Long id) {
         this.id = id;
     }
@@ -97,5 +103,5 @@ public class EmployeeJob implements Serializable {
     public String toString() {
         return "models.EmployeeJob[ id=" + id + " ]";
     }
-    
+
 }

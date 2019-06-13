@@ -20,7 +20,7 @@ public interface IAnnualLeaveController {
 
     public List<AnnualLeave> search(Object keyword);
 
-    public String save(String id, String remain, String taken);
+    public String save(String id, String remain);
 
     public String delete(String id);
 

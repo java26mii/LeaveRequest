@@ -30,7 +30,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r")
     , @NamedQuery(name = "Role.findById", query = "SELECT r FROM Role r WHERE r.id = :id")
-    , @NamedQuery(name = "Role.findByName", query = "SELECT r FROM Role r WHERE r.name = :name")})
+    , @NamedQuery(name = "Role.findByName", query = "SELECT r FROM Role r WHERE r.name = :name")
+    , @NamedQuery(name = "Role.findByIsDelete", query = "SELECT r FROM Role r WHERE r.isDelete = :isDelete")})
 public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,19 +42,28 @@ public class Role implements Serializable {
     @Basic(optional = false)
     @Column(name = "NAME")
     private String name;
+    @Basic(optional = false)
+    @Column(name = "IS_DELETE")
+    private Character isDelete;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "role", fetch = FetchType.LAZY)
     private List<EmployeeRole> employeeRoleList;
 
     public Role() {
     }
 
+    public Role(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Role(Long id) {
         this.id = id;
     }
 
-    public Role(Long id, String name) {
+    public Role(Long id, String name, Character isDelete) {
         this.id = id;
         this.name = name;
+        this.isDelete = isDelete;
     }
 
     public Long getId() {
@@ -70,6 +80,14 @@ public class Role implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Character getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Character isDelete) {
+        this.isDelete = isDelete;
     }
 
     @XmlTransient
@@ -105,5 +123,5 @@ public class Role implements Serializable {
     public String toString() {
         return "models.Role[ id=" + id + " ]";
     }
-    
+
 }

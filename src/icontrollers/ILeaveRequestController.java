@@ -6,7 +6,7 @@
 package icontrollers;
 
 import java.util.List;
-import tools.LeaveRequest;
+import models.LeaveRequest;
 
 /**
  *
@@ -20,7 +20,7 @@ public interface ILeaveRequestController {
 
     public List<LeaveRequest> search(Object keyword);
 
-    public String save(String id, String startDate, String endDate, String type, String detail, 
+    public String save(String id, String startDate, String endDate, String type, String notes, 
             String requester, String manager, String status);
 
     public String delete(String id);

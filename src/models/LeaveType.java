@@ -30,7 +30,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "LeaveType.findAll", query = "SELECT l FROM LeaveType l")
     , @NamedQuery(name = "LeaveType.findById", query = "SELECT l FROM LeaveType l WHERE l.id = :id")
-    , @NamedQuery(name = "LeaveType.findByName", query = "SELECT l FROM LeaveType l WHERE l.name = :name")})
+    , @NamedQuery(name = "LeaveType.findByName", query = "SELECT l FROM LeaveType l WHERE l.name = :name")
+    , @NamedQuery(name = "LeaveType.findByIsDelete", query = "SELECT l FROM LeaveType l WHERE l.isDelete = :isDelete")})
 public class LeaveType implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,19 +42,28 @@ public class LeaveType implements Serializable {
     @Basic(optional = false)
     @Column(name = "NAME")
     private String name;
+    @Basic(optional = false)
+    @Column(name = "IS_DELETE")
+    private Character isDelete;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "type", fetch = FetchType.LAZY)
     private List<LeaveRequest> leaveRequestList;
 
     public LeaveType() {
     }
 
+    public LeaveType(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public LeaveType(Long id) {
         this.id = id;
     }
 
-    public LeaveType(Long id, String name) {
+    public LeaveType(Long id, String name, Character isDelete) {
         this.id = id;
         this.name = name;
+        this.isDelete = isDelete;
     }
 
     public Long getId() {
@@ -70,6 +80,14 @@ public class LeaveType implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Character getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Character isDelete) {
+        this.isDelete = isDelete;
     }
 
     @XmlTransient
@@ -105,5 +123,5 @@ public class LeaveType implements Serializable {
     public String toString() {
         return "models.LeaveType[ id=" + id + " ]";
     }
-    
+
 }

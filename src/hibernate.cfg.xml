@@ -41,11 +41,11 @@ Contributor(s):
 -->
 <hibernate-configuration>
   <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
     <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
     <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:XE</property>
     <property name="hibernate.connection.username">lr</property>
     <property name="hibernate.connection.password">lr26</property>
-    <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
     <property name="hibernate.default_schema">lr</property>
     <property name="hibernate.show_sql">false</property>
     <property name="hibernate.connection.autocommit">true</property>
@@ -54,12 +54,12 @@ Contributor(s):
     <mapping class="models.AnnualLeave"/>
     <mapping class="models.Employee"/>
     <mapping class="models.EmployeeJob"/>
-    <mapping class="models.EmployeeRole"/>
     <mapping class="models.Job"/>
     <mapping class="models.LeaveRequest"/>
-    <mapping class="models.LeaveType"/>
+    <mapping class="models.LeaveRequestStatus"/>
     <mapping class="models.Role"/>
     <mapping class="models.Status"/>
-    <mapping class="models.LeaveRequestStatus"/>
+    <mapping class="models.EmployeeRole"/>
+    <mapping class="models.LeaveType"/>
   </session-factory>
 </hibernate-configuration>
