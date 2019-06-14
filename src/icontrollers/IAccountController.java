@@ -5,10 +5,15 @@
  */
 package icontrollers;
 
+import java.util.List;
+import models.Account;
+
 /**
  *
  * @author Arif Fridasari
  */
 public interface IAccountController {
-    
+
+    public List<Account> getAll();
+
 }
