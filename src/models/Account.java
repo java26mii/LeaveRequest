@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -47,6 +48,9 @@ public class Account implements Serializable {
     @Basic(optional = false)
     @Column(name = "IS_DELETE")
     private Character isDelete;
+    @Lob
+    @Column(name = "IMAGE")
+    private Serializable image;
     @JoinColumn(name = "ID", referencedColumnName = "ID", insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Employee employee;
@@ -95,6 +99,14 @@ public class Account implements Serializable {
 
     public void setIsDelete(Character isDelete) {
         this.isDelete = isDelete;
+    }
+
+    public Serializable getImage() {
+        return image;
+    }
+
+    public void setImage(Serializable image) {
+        this.image = image;
     }
 
     public Employee getEmployee() {

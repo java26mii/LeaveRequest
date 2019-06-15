@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -65,10 +66,10 @@ public class Employee implements Serializable {
     private LeaveRequest leaveRequest;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee", fetch = FetchType.LAZY)
     private List<EmployeeJob> employeeJobList;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "manager", fetch = FetchType.LAZY)
-    private Employee employee;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "manager", fetch = FetchType.LAZY)
+    private List<Employee> employeeList;
     @JoinColumn(name = "MANAGER", referencedColumnName = "ID")
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Employee manager;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "employee", fetch = FetchType.LAZY)
     private Account account;
@@ -80,10 +81,6 @@ public class Employee implements Serializable {
     public Employee() {
     }
 
-    public Employee(Long id) {
-        this.id = id;
-    }
-
     public Employee(Long id, String firstName, String lastName, String email, long phoneNumber, Employee manager) {
         this.id = id;
         this.firstName = firstName;
@@ -92,7 +89,15 @@ public class Employee implements Serializable {
         this.phoneNumber = phoneNumber;
         this.manager = manager;
     }
-    
+
+    public Employee(Long id) {
+        this.id = id;
+    }
+
+    public Employee(Long id, String email) {
+        this.id = id;
+        this.email = email;
+    }
 
     public Employee(Long id, String firstName, String lastName, String email, long phoneNumber, Character isDelete) {
         this.id = id;
@@ -177,12 +182,13 @@ public class Employee implements Serializable {
         this.employeeJobList = employeeJobList;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    @XmlTransient
+    public List<Employee> getEmployeeList() {
+        return employeeList;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
     }
 
     public Employee getManager() {
@@ -242,5 +248,5 @@ public class Employee implements Serializable {
     public String toString() {
         return "models.Employee[ id=" + id + " ]";
     }
-    
+
 }

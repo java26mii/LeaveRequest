@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Arif Fridasari
+ * @author KHAIRUL MUNA
  */
 @Entity
 @Table(name = "LEAVE_REQUESTS")
@@ -67,9 +67,6 @@ public class LeaveRequest implements Serializable {
     @JoinColumn(name = "ID", referencedColumnName = "ID", insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Employee employee;
-    @JoinColumn(name = "STATUS", referencedColumnName = "ID")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private LeaveRequestStatus status;
     @JoinColumn(name = "TYPE", referencedColumnName = "ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private LeaveType type;
@@ -145,14 +142,6 @@ public class LeaveRequest implements Serializable {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
-    }
-
-    public LeaveRequestStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(LeaveRequestStatus status) {
-        this.status = status;
     }
 
     public LeaveType getType() {

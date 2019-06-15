@@ -7,9 +7,7 @@ package models;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,12 +16,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -47,8 +43,6 @@ public class LeaveRequestStatus implements Serializable {
     @Column(name = "STATUS_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date statusDate;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "status", fetch = FetchType.LAZY)
-    private List<LeaveRequest> leaveRequestList;
     @JoinColumn(name = "LEAVE_REQUEST", referencedColumnName = "ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private LeaveRequest leaveRequest;
@@ -59,14 +53,12 @@ public class LeaveRequestStatus implements Serializable {
     public LeaveRequestStatus() {
     }
 
-    public LeaveRequestStatus(Long id, LeaveRequest leaveRequest, Status status,Date statusDate) {
+    public LeaveRequestStatus(Long id, LeaveRequest leaveRequest, Status status, Date statusDate) {
         this.id = id;
         this.statusDate = statusDate;
         this.leaveRequest = leaveRequest;
         this.status = status;
     }
-    
-    
 
     public LeaveRequestStatus(Long id) {
         this.id = id;
@@ -91,15 +83,6 @@ public class LeaveRequestStatus implements Serializable {
 
     public void setStatusDate(Date statusDate) {
         this.statusDate = statusDate;
-    }
-
-    @XmlTransient
-    public List<LeaveRequest> getLeaveRequestList() {
-        return leaveRequestList;
-    }
-
-    public void setLeaveRequestList(List<LeaveRequest> leaveRequestList) {
-        this.leaveRequestList = leaveRequestList;
     }
 
     public LeaveRequest getLeaveRequest() {
@@ -142,5 +125,5 @@ public class LeaveRequestStatus implements Serializable {
     public String toString() {
         return "models.LeaveRequestStatus[ id=" + id + " ]";
     }
-    
+
 }

@@ -53,7 +53,6 @@ public class AnnualLeave implements Serializable {
         this.id = id;
         this.remain = remain;
     }
-    
 
     public AnnualLeave(Long id) {
         this.id = id;
@@ -120,5 +119,5 @@ public class AnnualLeave implements Serializable {
     public String toString() {
         return "models.AnnualLeave[ id=" + id + " ]";
     }
-    
+
 }

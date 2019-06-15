@@ -64,7 +64,12 @@ public class JIInformation extends javax.swing.JInternalFrame {
         jLabel32 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
 
-        setPreferredSize(new java.awt.Dimension(1910, 1280));
+        setClosable(true);
+        setMaximizable(true);
+        setTitle("Information");
+        setToolTipText("");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/images/informationOke.png"))); // NOI18N
+        setPreferredSize(new java.awt.Dimension(1370, 1116));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -354,9 +359,9 @@ public class JIInformation extends javax.swing.JInternalFrame {
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(38, 38, 38)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(89, 89, 89)
+                .addGap(45, 45, 45)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(756, Short.MAX_VALUE))
+                .addContainerGap(420, Short.MAX_VALUE))
         );
 
         pack();

@@ -62,7 +62,13 @@ public class JIHistory extends javax.swing.JInternalFrame {
         jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
 
-        setPreferredSize(new java.awt.Dimension(1910, 1280));
+        setClosable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Request History");
+        setAutoscrolls(true);
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/images/historyOke.png"))); // NOI18N
+        setPreferredSize(new java.awt.Dimension(1370, 1116));
         setRequestFocusEnabled(false);
 
         jLabel2.setFont(new java.awt.Font("Cambria", 1, 48)); // NOI18N

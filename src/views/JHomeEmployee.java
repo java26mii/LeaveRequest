@@ -38,13 +38,15 @@ public class JHomeEmployee extends javax.swing.JFrame {
         history = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
+        uploadPhoto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setName("home"); // NOI18N
         setPreferredSize(new java.awt.Dimension(1910, 1280));
+
+        jLHome.setName("Home Leave Request"); // NOI18N
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -66,7 +68,7 @@ public class JHomeEmployee extends javax.swing.JFrame {
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 986, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addGap(94, 94, 94))
         );
@@ -151,8 +153,6 @@ public class JHomeEmployee extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel8.setText("Hai, Arif !");
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconUser.png"))); // NOI18N
-
         jPanel7.setBackground(new java.awt.Color(153, 0, 0));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -166,6 +166,16 @@ public class JHomeEmployee extends javax.swing.JFrame {
             .addGap(0, 12, Short.MAX_VALUE)
         );
 
+        uploadPhoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconUser.png"))); // NOI18N
+        uploadPhoto.setBorder(null);
+        uploadPhoto.setBorderPainted(false);
+        uploadPhoto.setContentAreaFilled(false);
+        uploadPhoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                uploadPhotoActionPerformed(evt);
+            }
+        });
+
         jLHome.setLayer(jPanel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLHome.setLayer(jPanel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLHome.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -176,8 +186,8 @@ public class JHomeEmployee extends javax.swing.JFrame {
         jLHome.setLayer(history, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLHome.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLHome.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLHome.setLayer(jLabel10, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLHome.setLayer(jPanel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLHome.setLayer(uploadPhoto, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLHomeLayout = new javax.swing.GroupLayout(jLHome);
         jLHome.setLayout(jLHomeLayout);
@@ -189,6 +199,9 @@ public class JHomeEmployee extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLHomeLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLHomeLayout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(224, 224, 224))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLHomeLayout.createSequentialGroup()
                         .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(FormRequest)
@@ -203,16 +216,15 @@ public class JHomeEmployee extends javax.swing.JFrame {
                                 .addComponent(jLabel5)
                                 .addGap(69, 69, 69))
                             .addComponent(history, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(145, 145, 145)
-                        .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jLHomeLayout.createSequentialGroup()
+                                .addGap(187, 187, 187)
+                                .addComponent(uploadPhoto)
+                                .addGap(87, 87, 87))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLHomeLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel8)
-                                .addGap(18, 18, 18))
-                            .addComponent(jLabel10))
-                        .addGap(88, 88, 88))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLHomeLayout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(224, 224, 224))))
+                                .addGap(108, 108, 108))))))
         );
         jLHomeLayout.setVerticalGroup(
             jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,12 +235,7 @@ public class JHomeEmployee extends javax.swing.JFrame {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jLHomeLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel10)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel8))
-                    .addGroup(jLHomeLayout.createSequentialGroup()
-                        .addGap(109, 109, 109)
+                        .addGap(96, 96, 96)
                         .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jLHomeLayout.createSequentialGroup()
                                 .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,8 +248,13 @@ public class JHomeEmployee extends javax.swing.JFrame {
                             .addGroup(jLHomeLayout.createSequentialGroup()
                                 .addComponent(history)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel5)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
+                                .addComponent(jLabel5))))
+                    .addGroup(jLHomeLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(uploadPhoto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel8)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 216, Short.MAX_VALUE)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -259,7 +271,7 @@ public class JHomeEmployee extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLHome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1304, Short.MAX_VALUE))
+                .addGap(0, 1318, Short.MAX_VALUE))
         );
 
         pack();
@@ -278,8 +290,16 @@ public class JHomeEmployee extends javax.swing.JFrame {
     }//GEN-LAST:event_informationActionPerformed
 
     private void historyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historyActionPerformed
-        // TODO add your handling code here:
+        JIHistory jIHistory = new JIHistory();
+        this.jLHome.add(jIHistory);
+        jIHistory.show();
     }//GEN-LAST:event_historyActionPerformed
+
+    private void uploadPhotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadPhotoActionPerformed
+        JIUploadFoto jIUploadFoto = new JIUploadFoto();
+        this.jLHome.add(jIUploadFoto);
+        jIUploadFoto.show();
+    }//GEN-LAST:event_uploadPhotoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -322,7 +342,6 @@ public class JHomeEmployee extends javax.swing.JFrame {
     private javax.swing.JButton information;
     private javax.swing.JLayeredPane jLHome;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -333,5 +352,6 @@ public class JHomeEmployee extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JButton uploadPhoto;
     // End of variables declaration//GEN-END:variables
 }
