@@ -14,7 +14,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author KHAIRUL MUNA
+ * @author Arif Fridasari
  */
 public class JIUploadFoto extends javax.swing.JInternalFrame {
 
