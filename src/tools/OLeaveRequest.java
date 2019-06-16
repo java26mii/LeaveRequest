@@ -35,10 +35,15 @@ public class OLeaveRequest {
             System.out.println(annualLeave.getRemain());
         }
         
+        //System.out.println(dDao.getEmployee("sindiyuliawibowo31@gmail.com"));
 //        IEmployeeController iec = new EmployeeController(factory);
 //        System.out.println(iec.save("150", "coba", "coba", "mail", "100", "100"));
         IAccountController iac = new AccountController(factory);
-        System.out.println(iac.login("username", "password"));
-        
+//        Account account = iac.getById("100");
+//        System.out.println(iac.save("100", "arif", "123"));
+//        String email = "usup@mail.com";
+//        System.out.println(email.contains("@"));
+          System.out.println(iac.login("sindiyuliawibowo31@gmail.com", "yulia123"));
+        //System.out.println(iac.save("130", "usup", "usup123"));
     }
 }

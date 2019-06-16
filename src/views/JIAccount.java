@@ -29,22 +29,22 @@ public class JIAccount extends javax.swing.JInternalFrame {
         initComponents();
         lblEmpName.setText(username);
         textEmpId.setEditable(false);
-        textEmpId.setText(idEmp);
+        //textEmpId.setText(idEmp);
         checkAccount(idEmp);
         getRole();
     }
     
     private void checkAccount(String id){
         Account account = iac.getById(id);
-        String idEmp = String.valueOf(account.getId());
             
         if (account != null) {
+            String idEmp = String.valueOf(account.getId());
             textEmpId.setText(idEmp);
             textUsername.setText(account.getUsername());
             textPassword.setText(account.getPassword());
         }
         
-        textEmpId.setText(idEmp);
+        textEmpId.setText(id);
     }
     
     private void resetTextAccount(){
@@ -256,9 +256,12 @@ public class JIAccount extends javax.swing.JInternalFrame {
         } else {
             int confirm = JOptionPane.showConfirmDialog(this, "Apakah anda yakin ingin menyimpan data? ", "confirm Save ", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (confirm == JOptionPane.YES_OPTION) {
+//                System.out.println(textEmpId.getText());
+//                System.out.println(textUsername.getText());
+//                System.out.println(textPassword.getText());
                 JOptionPane.showMessageDialog(null, iac.save(textEmpId.getText(), textUsername.getText(), textPassword.getText()));
                 //updateTableEmp("");
-                resetTextAccount();
+                //resetTextAccount();
             }
         }
     }//GEN-LAST:event_buttonSaveActionPerformed

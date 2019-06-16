@@ -7,6 +7,7 @@ package models;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Arif Fridasari
+ * @author ACER
  */
 @Entity
 @Table(name = "ACCOUNTS")
@@ -52,7 +53,7 @@ public class Account implements Serializable {
     @Column(name = "IMAGE")
     private Serializable image;
     @JoinColumn(name = "ID", referencedColumnName = "ID", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne()
     private Employee employee;
 
     public Account() {
@@ -107,20 +108,18 @@ public class Account implements Serializable {
         this.isDelete = isDelete;
     }
 
-    public Serializable getImage() {
-        return image;
-    }
-
-    public void setImage(Serializable image) {
-        this.image = image;
-    }
-
     public Employee getEmployee() {
         return employee;
     }
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+        if (null != employee) {
+            this.employee = employee;
+
+        } else {
+            this.employee = null;
+        }
     }
 
     @Override
