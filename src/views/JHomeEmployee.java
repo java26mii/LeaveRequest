@@ -311,10 +311,10 @@ public class JHomeEmployee extends javax.swing.JFrame {
         String from = String.valueOf(leaveRequest.getStartDate());
         String to = String.valueOf(leaveRequest.getEndDate());
         String notes = leaveRequest.getNotes();
-        String type = String.valueOf(leaveRequest.getType().getName());
+//        String type = leaveRequestStatus.getStatus();
 //        String status = leaveRequestStatus.getStatus().getName();
         
-        JIHistory jIHistory = new JIHistory(id, from, to, notes, type);
+        JIHistory jIHistory = new JIHistory(id, from, to, notes);
         this.jLHome.add(jIHistory);
         jIHistory.show();
     }//GEN-LAST:event_historyActionPerformed

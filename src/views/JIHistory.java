@@ -19,14 +19,13 @@ public class JIHistory extends javax.swing.JInternalFrame {
     /**
      * Creates new form JIHistory
      */
-    public JIHistory(String id, String from, String to, String notes,String type ) {
+    public JIHistory(String id, String from, String to, String notes ) {
         initComponents();
         txtId.setText(id);
         txtStartDate.setText(from);
         txtEndDate.setText(to);
         txtNotes.setText(notes);
 //        txtStatus.setText(status);
-        txtType.setText(type);
     }
 
     /**
@@ -226,11 +225,11 @@ public class JIHistory extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel17)
-                                .addComponent(txtEndDate)))
+                                .addComponent(txtEndDate))
+                            .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(txtSubmit)
