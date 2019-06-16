@@ -5,14 +5,24 @@
  */
 package views;
 
+import controllers.EmployeeController;
+import icontrollers.IEmployeeController;
+import org.hibernate.SessionFactory;
+import tools.HibernateUtil;
+
 /**
  *
  * @author Arif Fridasari
  */
 public class JHomeEmployee extends javax.swing.JFrame {
-
-    public JHomeEmployee() {
+    SessionFactory factory = HibernateUtil.getSessionFactory();
+    IEmployeeController iec = new EmployeeController(factory);
+    
+    public JHomeEmployee(String id, String username) {
         initComponents();
+        lblGreeting.setText("Hai, "+username+" !");
+        lblUser.setText(id);
+        lblUser.setVisible(false);
     }
 
     /**
@@ -34,11 +44,14 @@ public class JHomeEmployee extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         information = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        history = new javax.swing.JButton();
+        buttonEmp = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        lblGreeting = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         uploadPhoto = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        history = new javax.swing.JButton();
+        lblUser = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -121,21 +134,21 @@ public class JHomeEmployee extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel6.setText("Information");
 
-        history.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/historyOke.png"))); // NOI18N
-        history.setBorder(null);
-        history.setBorderPainted(false);
-        history.setContentAreaFilled(false);
-        history.addActionListener(new java.awt.event.ActionListener() {
+        buttonEmp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/people-icon.png"))); // NOI18N
+        buttonEmp.setBorder(null);
+        buttonEmp.setBorderPainted(false);
+        buttonEmp.setContentAreaFilled(false);
+        buttonEmp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                historyActionPerformed(evt);
+                buttonEmpActionPerformed(evt);
             }
         });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel5.setText("History");
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel8.setText("Hai, Arif !");
+        lblGreeting.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblGreeting.setText("Hai, User !");
 
         jPanel7.setBackground(new java.awt.Color(153, 0, 0));
 
@@ -160,17 +173,36 @@ public class JHomeEmployee extends javax.swing.JFrame {
             }
         });
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel10.setText("Employee Management");
+
+        history.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/historyOke.png"))); // NOI18N
+        history.setBorder(null);
+        history.setBorderPainted(false);
+        history.setContentAreaFilled(false);
+        history.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                historyActionPerformed(evt);
+            }
+        });
+
+        lblUser.setText("id_user");
+        lblUser.setEnabled(false);
+
         jLHome.setLayer(jPanel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLHome.setLayer(jPanel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLHome.setLayer(FormRequest, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLHome.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLHome.setLayer(information, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLHome.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLHome.setLayer(history, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLHome.setLayer(buttonEmp, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLHome.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLHome.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLHome.setLayer(lblGreeting, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLHome.setLayer(jPanel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLHome.setLayer(uploadPhoto, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLHome.setLayer(jLabel10, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLHome.setLayer(history, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLHome.setLayer(lblUser, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLHomeLayout = new javax.swing.GroupLayout(jLHome);
         jLHome.setLayout(jLHomeLayout);
@@ -182,25 +214,30 @@ public class JHomeEmployee extends javax.swing.JFrame {
                 .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(FormRequest)
                     .addComponent(jLabel1))
-                .addGap(121, 121, 121)
+                .addGap(113, 113, 113)
                 .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel6)
-                    .addComponent(information))
+                    .addComponent(information)
+                    .addComponent(buttonEmp)
+                    .addComponent(jLabel10))
                 .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jLHomeLayout.createSequentialGroup()
-                        .addGap(183, 183, 183)
+                        .addGap(196, 196, 196)
                         .addComponent(jLabel5)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
                     .addGroup(jLHomeLayout.createSequentialGroup()
-                        .addGap(112, 112, 112)
+                        .addGap(127, 127, 127)
                         .addComponent(history)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(uploadPhoto, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLHomeLayout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(21, 21, 21)))
-                        .addGap(104, 104, 104))))
+                                .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(uploadPhoto)
+                                    .addComponent(lblGreeting, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(79, 79, 79))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLHomeLayout.createSequentialGroup()
+                                .addComponent(lblUser)
+                                .addGap(145, 145, 145))))))
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -212,28 +249,34 @@ public class JHomeEmployee extends javax.swing.JFrame {
                 .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jLHomeLayout.createSequentialGroup()
                         .addGap(126, 126, 126)
-                        .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(FormRequest)
-                            .addComponent(information))
+                        .addComponent(FormRequest)
                         .addGap(18, 18, 18)
-                        .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel6)))
+                        .addComponent(jLabel1))
                     .addGroup(jLHomeLayout.createSequentialGroup()
+                        .addGap(171, 171, 171)
+                        .addComponent(uploadPhoto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblGreeting)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblUser))
+                    .addGroup(jLHomeLayout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(101, 101, 101)
                         .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jLHomeLayout.createSequentialGroup()
-                                .addGap(13, 13, 13)
-                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(101, 101, 101)
-                                .addComponent(history))
-                            .addGroup(jLHomeLayout.createSequentialGroup()
-                                .addGap(171, 171, 171)
-                                .addComponent(uploadPhoto)
+                                .addComponent(history)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel8)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel5)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 392, Short.MAX_VALUE)
+                                .addComponent(jLabel5))
+                            .addGroup(jLHomeLayout.createSequentialGroup()
+                                .addComponent(information)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel6)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addComponent(buttonEmp)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel10)
+                .addGap(72, 72, 72)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(68, 68, 68))
         );
@@ -257,7 +300,10 @@ public class JHomeEmployee extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void FormRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FormRequestActionPerformed
-        JIRequestForm jIRequestForm = new JIRequestForm();
+        String id = lblUser.getText();
+        String username = lblGreeting.getText();
+        System.out.println(id);
+        JIRequestForm jIRequestForm = new JIRequestForm(id, username);
         this.jLHome.add(jIRequestForm);
         jIRequestForm.show();
     }//GEN-LAST:event_FormRequestActionPerformed
@@ -268,20 +314,23 @@ public class JHomeEmployee extends javax.swing.JFrame {
         jIInformation.show();
     }//GEN-LAST:event_informationActionPerformed
 
-    private void historyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historyActionPerformed
-//        JIHistory jIHistory = new JIHistory();
-//        this.jLHome.add(jIHistory);
-//        jIHistory.show();
+    private void buttonEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEmpActionPerformed
         JIEmployee jIEmployee = new JIEmployee();
         this.jLHome.add(jIEmployee);
         jIEmployee.show();
-    }//GEN-LAST:event_historyActionPerformed
+    }//GEN-LAST:event_buttonEmpActionPerformed
 
     private void uploadPhotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadPhotoActionPerformed
         JIUploadFoto jIUploadFoto = new JIUploadFoto();
         this.jLHome.add(jIUploadFoto);
         jIUploadFoto.show();
     }//GEN-LAST:event_uploadPhotoActionPerformed
+
+    private void historyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historyActionPerformed
+        JIHistory jIHistory = new JIHistory();
+        this.jLHome.add(jIHistory);
+        jIHistory.show();
+    }//GEN-LAST:event_historyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -313,26 +362,29 @@ public class JHomeEmployee extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JHomeEmployee().setVisible(true);
+                new JHomeEmployee("","").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton FormRequest;
+    private javax.swing.JButton buttonEmp;
     private javax.swing.JButton history;
     private javax.swing.JButton information;
     private javax.swing.JLayeredPane jLHome;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JLabel lblGreeting;
+    private javax.swing.JLabel lblUser;
     private javax.swing.JButton uploadPhoto;
     // End of variables declaration//GEN-END:variables
 }

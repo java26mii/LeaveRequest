@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import models.Account;
 import models.Employee;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
@@ -41,6 +42,8 @@ public class JIEmployee extends javax.swing.JInternalFrame {
         textEmpPhone.setText("");
         textEmpManager.setText("");
         textSearch.setText("");
+        lblEmpStatus.setText("");
+        lblClick.setText("");
     }
     
     private void showTableEmp(String s){
@@ -76,6 +79,22 @@ public class JIEmployee extends javax.swing.JInternalFrame {
             
         showTableEmp(s);
     }
+    
+    private void checkUser(String id){
+        List<Employee> employees = new ArrayList<>();
+        employees = iec.search(id);
+        
+        if (!employees.isEmpty()) {
+           Account account = iac.getById(id);
+            if (account != null) {
+                lblEmpStatus.setText("Employee already have an account");
+                lblClick.setText("Manage Account");
+            }else{
+                lblEmpStatus.setText("Employee does not have an account");
+                lblClick.setText("Add an Account");
+            }
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -109,7 +128,7 @@ public class JIEmployee extends javax.swing.JInternalFrame {
         buttonSave = new javax.swing.JButton();
         buttonReset = new javax.swing.JButton();
         buttonDelete = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        lblEmpStatus = new javax.swing.JLabel();
         lblClick = new javax.swing.JLabel();
 
         setClosable(true);
@@ -220,8 +239,8 @@ public class JIEmployee extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Employee_Status");
+        lblEmpStatus.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lblEmpStatus.setText("Employee_Status");
 
         lblClick.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lblClick.setForeground(new java.awt.Color(0, 102, 204));
@@ -251,7 +270,7 @@ public class JIEmployee extends javax.swing.JInternalFrame {
         jLayerEmp.setLayer(buttonSave, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayerEmp.setLayer(buttonReset, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayerEmp.setLayer(buttonDelete, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayerEmp.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayerEmp.setLayer(lblEmpStatus, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayerEmp.setLayer(lblClick, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayerEmpLayout = new javax.swing.GroupLayout(jLayerEmp);
@@ -263,7 +282,7 @@ public class JIEmployee extends javax.swing.JInternalFrame {
             .addGroup(jLayerEmpLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 890, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(jLayerEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayerEmpLayout.createSequentialGroup()
                         .addGroup(jLayerEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -286,12 +305,10 @@ public class JIEmployee extends javax.swing.JInternalFrame {
                                 .addGap(58, 58, 58)
                                 .addComponent(buttonDelete)))
                         .addGap(82, 82, 82))
+                    .addComponent(lblEmpStatus, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayerEmpLayout.createSequentialGroup()
                         .addComponent(lblClick, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(129, 129, 129))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayerEmpLayout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(72, 72, 72))))
+                        .addGap(102, 102, 102))))
             .addGroup(jLayerEmpLayout.createSequentialGroup()
                 .addGap(203, 203, 203)
                 .addComponent(textSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -341,11 +358,11 @@ public class JIEmployee extends javax.swing.JInternalFrame {
                             .addComponent(buttonSave)
                             .addComponent(buttonReset)
                             .addComponent(buttonDelete))
-                        .addGap(55, 55, 55)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblClick)
-                        .addContainerGap(240, Short.MAX_VALUE))))
+                        .addGap(73, 73, 73)
+                        .addComponent(lblEmpStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblClick, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(244, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -372,6 +389,7 @@ public class JIEmployee extends javax.swing.JInternalFrame {
         textEmpMail.setText(model.getValueAt(SelectedRowIndex, 4).toString());
         textEmpPhone.setText(model.getValueAt(SelectedRowIndex, 5).toString());
         textEmpManager.setText(model.getValueAt(SelectedRowIndex, 6).toString());
+        checkUser(model.getValueAt(SelectedRowIndex, 1).toString());
     }//GEN-LAST:event_tableEmpMouseClicked
 
     private void textSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textSearchActionPerformed
@@ -429,7 +447,6 @@ public class JIEmployee extends javax.swing.JInternalFrame {
     private javax.swing.JButton buttonDelete;
     private javax.swing.JButton buttonReset;
     private javax.swing.JButton buttonSave;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLayeredPane jLayerEmp;
@@ -441,6 +458,7 @@ public class JIEmployee extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblEmpMail;
     private javax.swing.JLabel lblEmpManager;
     private javax.swing.JLabel lblEmpPhone;
+    private javax.swing.JLabel lblEmpStatus;
     private javax.swing.JLabel lblFirstName;
     private javax.swing.JLabel lblLastName;
     private javax.swing.JTable tableEmp;

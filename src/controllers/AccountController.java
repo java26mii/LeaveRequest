@@ -48,8 +48,8 @@ public class AccountController implements IAccountController {
         Account account = new Account(new Long(id), username, pass, new Character('0'));
         if (gdao.saveOrDelete(account, false)) {
             result = "Success";
-        } 
-        
+        }
+
         return result;
     }
 
@@ -60,10 +60,10 @@ public class AccountController implements IAccountController {
         if (gdao.saveOrDelete(account, true)) {
             result = "Success";
         }
-        
+
         return result;
     }
-    
+
     public String hash(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
@@ -75,33 +75,52 @@ public class AccountController implements IAccountController {
         if (!acc.contains("@")) {
             Account account = gdao.getAccount(acc);
             if (account != null) {
-                hashed = account.getPassword();
                 
-            }else{
+                hashed = String.valueOf(account.getPassword());
+
+                boolean cekPassword = BCrypt.checkpw(password, hashed);
+
+                if (cekPassword) {
+                    result = "Login Success";
+                } else {
+                    result = "Wrong Password";
+                }
+
+            } else {
                 result = "Username is wrong";
             }
-            
-        }else{
+
+        } else {
             Employee employee = gdao.getEmployee(acc);
             if (employee != null) {
                 Account account = gdao.getById(employee.getId());
-                hashed = account.getPassword();
-                
-            }else{
+                hashed = String.valueOf(account.getPassword());
+
+                boolean cekPassword = BCrypt.checkpw(password, hashed);
+
+                if (cekPassword) {
+                    result = "Login Success";
+                } else {
+                    result = "Wrong Password";
+                }
+
+            } else {
                 result = "Email is wrong";
             }
-            
-        }
-        
-        boolean cekPassword = BCrypt.checkpw(password, hashed);
-            
-        if (cekPassword) {
-            result = "Login Success";
-        }else{
-            result = "Wrong Password";
+
         }
 
         return result;
+    }
+
+    @Override
+    public Account getAccount(String username) {
+        return gdao.getAccount(username);
+    }
+
+    @Override
+    public Employee getEmployee(String email) {
+        return gdao.getEmployee(email);
     }
 
 }

@@ -7,6 +7,7 @@ package icontrollers;
 
 import java.util.List;
 import models.Account;
+import models.Employee;
 
 /**
  *
@@ -25,5 +26,9 @@ public interface IAccountController {
     public String delete(String id);
     
     public String login(String username, String password);
+    
+    public Account getAccount(String username);
+    
+    public Employee getEmployee(String email);
 
 }

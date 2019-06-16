@@ -153,7 +153,7 @@ public class JLoginEmail extends javax.swing.JFrame {
         }
         getContentPane().add(btnSend);
         this.setVisible(false);
-        new JHomeEmployee().setVisible(true);
+        new JHomeEmployee("su", "ok").setVisible(true);
 
     }//GEN-LAST:event_btnSendActionPerformed
 

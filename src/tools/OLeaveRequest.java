@@ -28,12 +28,12 @@ public class OLeaveRequest {
         SessionFactory factory = HibernateUtil.getSessionFactory();
         System.out.println(factory);
 
-        GeneralDAO<AnnualLeave> dDao = new GeneralDAO<>(factory, AnnualLeave.class);
+        GeneralDAO<Account> dDao = new GeneralDAO(factory, Account.class);
         AnnualLeaveController dc = new AnnualLeaveController(factory);
-        for (AnnualLeave annualLeave : dDao.getData("")) {
-            System.out.println(annualLeave.getId());
-            System.out.println(annualLeave.getRemain());
-        }
+//        for (AnnualLeave annualLeave : dDao.getData("")) {
+//            System.out.println(annualLeave.getId());
+//            System.out.println(annualLeave.getRemain());
+//        }
         
         //System.out.println(dDao.getEmployee("sindiyuliawibowo31@gmail.com"));
 //        IEmployeeController iec = new EmployeeController(factory);
@@ -43,7 +43,13 @@ public class OLeaveRequest {
 //        System.out.println(iac.save("100", "arif", "123"));
 //        String email = "usup@mail.com";
 //        System.out.println(email.contains("@"));
-          System.out.println(iac.login("sindiyuliawibowo31@gmail.com", "yulia123"));
+          System.out.println(iac.login("gmail.com", "yulia123"));
+//          Account account = dDao.getAccount("sindi123");
+//          if (account != null) {
+//              System.out.println("berisi");
+//        }else{
+//              System.out.println("kosong");
+//          }
         //System.out.println(iac.save("130", "usup", "usup123"));
     }
 }
