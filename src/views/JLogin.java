@@ -39,7 +39,9 @@ public class JLogin extends javax.swing.JFrame {
     SessionFactory factory = HibernateUtil.getSessionFactory();
 
     GeneralDAO<Account> dAO = new GeneralDAO<>(factory, Account.class);
+    
     IAccountController idc = new AccountController(factory);
+    IEmployeeController iec = new EmployeeController(factory);
 
     /**
      * Creates new form NewJFrame
@@ -198,6 +200,8 @@ public class JLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        String email = txtEmail.getText();
+       
         final String auth_host = "smtp.gmail.com";
         final String auth_port = "587";
         final String auth_email = "bootcamp.java26@gmail.com";
@@ -234,7 +238,8 @@ public class JLogin extends javax.swing.JFrame {
         }
         getContentPane().add(btnLogin);
         this.setVisible(false);
-        new JHomeEmployee().setVisible(true);
+        JHomeEmployee jhe = new JHomeEmployee();
+        jhe.setVisible(true);
 
     }//GEN-LAST:event_btnLoginActionPerformed
 
