@@ -99,12 +99,13 @@ public class Employee implements Serializable {
         this.email = email;
     }
 
-    public Employee(Long id, String firstName, String lastName, String email, long phoneNumber, Character isDelete) {
+    public Employee(Long id, String firstName, String lastName, String email, long phoneNumber, Employee manager, Character isDelete) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.manager = manager;
         this.isDelete = isDelete;
     }
 

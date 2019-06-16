@@ -15,5 +15,15 @@ import models.Account;
 public interface IAccountController {
 
     public List<Account> getAll();
+    
+    public Account getById(String id);
+
+    public List<Account> search(Object keyword);
+
+    public String save(String id, String username, String password);
+
+    public String delete(String id);
+    
+    public String login(String username, String password);
 
 }

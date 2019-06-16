@@ -6,7 +6,9 @@
 package tools;
 
 import controllers.AnnualLeaveController;
+import controllers.EmployeeController;
 import daos.GeneralDAO;
+import icontrollers.IEmployeeController;
 import models.AnnualLeave;
 import org.hibernate.SessionFactory;
 
@@ -29,6 +31,9 @@ public class OLeaveRequest {
             System.out.println(annualLeave.getId());
             System.out.println(annualLeave.getRemain());
         }
+        
+//        IEmployeeController iec = new EmployeeController(factory);
+//        System.out.println(iec.save("150", "coba", "coba", "mail", "100", "100"));
 
     }
 }

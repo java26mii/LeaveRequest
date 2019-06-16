@@ -41,7 +41,8 @@ public class EmployeeController implements IEmployeeController {
     @Override
     public String save(String id, String firstName, String lastName, String email, String phoneNumber, String manager) {
         String result = "";
-        Employee employee = new Employee(new Long(id), firstName, lastName, email, new Long(phoneNumber), new Employee(new Long(manager)));
+        //Employee employee = new Employee(new Long(id), firstName, lastName, email, new Long(phoneNumber), new Employee(new Long(manager)));
+        Employee employee = new Employee(new Long(id), firstName, lastName, email, new Long(phoneNumber), new Employee(new Long(manager)), new Character('0'));
         if (gdao.saveOrDelete(employee, false)) {
             result = "Success";
         } else {
