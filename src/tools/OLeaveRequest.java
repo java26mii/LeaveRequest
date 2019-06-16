@@ -5,10 +5,13 @@
  */
 package tools;
 
+import controllers.AccountController;
 import controllers.AnnualLeaveController;
 import controllers.EmployeeController;
 import daos.GeneralDAO;
+import icontrollers.IAccountController;
 import icontrollers.IEmployeeController;
+import models.Account;
 import models.AnnualLeave;
 import org.hibernate.SessionFactory;
 
@@ -34,6 +37,8 @@ public class OLeaveRequest {
         
 //        IEmployeeController iec = new EmployeeController(factory);
 //        System.out.println(iec.save("150", "coba", "coba", "mail", "100", "100"));
-
+        IAccountController iac = new AccountController(factory);
+        System.out.println(iac.login("username", "password"));
+        
     }
 }
