@@ -164,6 +164,7 @@ public class GeneralDAO<T> implements IGeneralDAO<T> {
         session = this.factory.openSession();
         transaction = session.beginTransaction();
         try {
+//            SELECT e.email, ac.password FROM Account ac, Employee e WHERE ac.id = e.id AND e.email LIKE 'arief.fridasari@gmail.com'
             String hql = "SELECT e.email, ac.password FROM Account ac, Employee e WHERE ac.id = e.id";
             Query query = session.createQuery(hql);
             query.setParameter("e.email", employee.getEmail());

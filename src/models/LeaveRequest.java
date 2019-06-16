@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author KHAIRUL MUNA
+ * @author Arif Fridasari
  */
 @Entity
 @Table(name = "LEAVE_REQUESTS")
@@ -79,6 +79,16 @@ public class LeaveRequest implements Serializable {
     public LeaveRequest(Long id) {
         this.id = id;
     }
+
+    public LeaveRequest(Long id, Date startDate, Date endDate, String notes, Employee requester, LeaveType type) {
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.notes = notes;
+        this.requester = requester;
+        this.type = type;
+    }
+
 
     public LeaveRequest(Long id, Date startDate, Date endDate, String notes, Character isDelete) {
         this.id = id;

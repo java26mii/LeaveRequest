@@ -5,6 +5,9 @@
  */
 package views;
 
+import controllers.EmployeeController;
+import controllers.LeaveTypeController;
+import icontrollers.IEmployeeController;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
@@ -14,6 +17,10 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
+import models.Employee;
+import models.LeaveType;
+import org.hibernate.SessionFactory;
+import tools.HibernateUtil;
 
 /**
  *
@@ -21,11 +28,40 @@ import javax.swing.JOptionPane;
  */
 public class JIRequestForm extends javax.swing.JInternalFrame {
 
+    SessionFactory factory = HibernateUtil.getSessionFactory();
+    IEmployeeController iac = new EmployeeController(factory);
+
+    Employee employee = iac.getById("100");
+    String email = employee.getEmail();
+
     /**
      * Creates new form JIRequestForm
      */
-    public JIRequestForm() {
+    public JIRequestForm(String phoneNumber) {
         initComponents();
+        txtPhoneNumber.setText(phoneNumber);
+        getManager();
+        getType();
+    }
+
+    private void getManager() {
+        for (Employee emp : new EmployeeController(factory).getAll()) {
+            if (emp.getManager() == null) {
+                cmbManager.addItem("");
+            } else {
+                cmbManager.addItem(emp.getId() + " - " + emp.getFirstName() +" "+ emp.getLastName());
+            }
+        }
+    }
+    
+    private void getType() {
+        for (LeaveType leaveType : new LeaveTypeController(factory).getAll()) {
+            if (leaveType.getName()== null) {
+                cmbType.addItem("");
+            } else {
+                cmbType.addItem(leaveType.getId() + " - " + leaveType.getName());
+            }
+        }
     }
 
     /**
@@ -59,13 +95,12 @@ public class JIRequestForm extends javax.swing.JInternalFrame {
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmbManager = new javax.swing.JComboBox<>();
+        cmbType = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jLabel19 = new javax.swing.JLabel();
+        txtPhoneNumber = new javax.swing.JLabel();
         btnSubmit = new javax.swing.JButton();
-        txtEmail = new javax.swing.JTextField();
 
         setBorder(null);
         setClosable(true);
@@ -152,21 +187,19 @@ public class JIRequestForm extends javax.swing.JInternalFrame {
         jLabel23.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel23.setText("Total Leave");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbManager.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--  choose manager  --" }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--  choose type  --" }));
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel19.setText("8888888888888");
+        txtPhoneNumber.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtPhoneNumber.setText("nomor");
 
-        btnSubmit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/IconSubmit.png"))); // NOI18N
-        btnSubmit.setBorder(null);
-        btnSubmit.setBorderPainted(false);
-        btnSubmit.setContentAreaFilled(false);
+        btnSubmit.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnSubmit.setText("Submit");
         btnSubmit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSubmitActionPerformed(evt);
@@ -194,11 +227,11 @@ public class JIRequestForm extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel15)
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cmbType, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel16)
-                                .addGap(434, 434, 434)
-                                .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(432, 432, 432)
+                                .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -211,7 +244,7 @@ public class JIRequestForm extends javax.swing.JInternalFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel12)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(cmbManager, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(99, 99, 99)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,15 +261,13 @@ public class JIRequestForm extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel17)
                                     .addComponent(jLabel18))
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel19)))
+                                .addComponent(txtPhoneNumber)))
                         .addGap(52, 52, 52)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel21)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtEmail)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -276,12 +307,12 @@ public class JIRequestForm extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel12)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(cmbManager, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(jLabel15)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(cmbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(48, 48, 48)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,36 +320,31 @@ public class JIRequestForm extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel9)
                                 .addComponent(jLabel21))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(4, 4, 4)
-                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel16))
-                        .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel17))
-                        .addGap(49, 49, 49)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel23)
-                            .addComponent(jLabel22))
-                        .addGap(47, 47, 47)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel18)
-                            .addComponent(jLabel19)))
-                    .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(549, Short.MAX_VALUE))
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel16)
+                    .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel17))
+                .addGap(49, 49, 49)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23)
+                    .addComponent(jLabel22))
+                .addGap(47, 47, 47)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel18)
+                    .addComponent(txtPhoneNumber))
+                .addContainerGap(540, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-
         final String auth_host = "smtp.gmail.com";
         final String auth_port = "587";
         final String auth_email = "bootcamp.java26@gmail.com";
@@ -341,29 +367,29 @@ public class JIRequestForm extends javax.swing.JInternalFrame {
 
             Message message = new MimeMessage(mailSession);
             message.setFrom(new InternetAddress(auth_email));
-            message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(txtEmail.getText()));
-            message.setSubject("--- Notification ---");
-            message.setDescription("Selamat");
-//            message.setContent("");
-            MimeBodyPart messageBodyPart = new MimeBodyPart();
 
-//            messageBodyPart.setText(txtMessage.getText());
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(email));
+            message.setSubject("Notification Pengajuan");
+            message.setText("Dear " + email + "  Anda telah melakukan pengajuan Cuti. Mohon untuk menunggu proses verifikasi pengajuan");
             Transport.send(message);
 
-            JOptionPane.showMessageDialog(null, "Mail Send Successfully.");
+            JOptionPane.showMessageDialog(null, "Anda telah sukses melakukan Pengajuan");
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         getContentPane().add(btnSubmit);
+        this.setVisible(false);
+        new JHomeEmployee().setVisible(true);
+
     }//GEN-LAST:event_btnSubmitActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSubmit;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> cmbManager;
+    private javax.swing.JComboBox<String> cmbType;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -374,7 +400,6 @@ public class JIRequestForm extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -389,6 +414,6 @@ public class JIRequestForm extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField txtEmail;
+    private javax.swing.JLabel txtPhoneNumber;
     // End of variables declaration//GEN-END:variables
 }

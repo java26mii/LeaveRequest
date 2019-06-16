@@ -6,8 +6,19 @@
 package views;
 
 import controllers.EmployeeController;
+import controllers.JobController;
+import controllers.LeaveRequestController;
+import controllers.LeaveRequestStatusController;
+import controllers.LeaveTypeController;
 import icontrollers.IEmployeeController;
+import icontrollers.IJobController;
+import icontrollers.ILeaveRequestController;
+import icontrollers.ILeaveRequestStatusController;
 import models.Employee;
+import models.Job;
+import models.LeaveRequest;
+import models.LeaveRequestStatus;
+import models.LeaveType;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,8 +29,13 @@ import tools.HibernateUtil;
  * @author Arif Fridasari
  */
 public class JHomeEmployee extends javax.swing.JFrame {
+
     SessionFactory factory = HibernateUtil.getSessionFactory();
     IEmployeeController iac = new EmployeeController(factory);
+    IJobController ijc = new JobController(factory);
+    ILeaveRequestController ilrc = new LeaveRequestController(factory);
+    ILeaveRequestStatusController ilrsc = new LeaveRequestStatusController(factory);
+
     public JHomeEmployee() {
         initComponents();
     }
@@ -265,22 +281,40 @@ public class JHomeEmployee extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void FormRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FormRequestActionPerformed
-        JIRequestForm jIRequestForm = new JIRequestForm();
+        Employee employee = iac.getById("100");
+        String email = employee.getEmail();
+        String phoneNumber = String.valueOf("0" + employee.getPhoneNumber());
+        JIRequestForm jIRequestForm = new JIRequestForm(phoneNumber);
         this.jLHome.add(jIRequestForm);
         jIRequestForm.show();
     }//GEN-LAST:event_FormRequestActionPerformed
 
     private void informationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_informationActionPerformed
         Employee employee = iac.getById("100");
+        Job jobs = ijc.getById("1");
         String id = String.valueOf(employee.getId());
-        String name= employee.getFirstName();
-        JIInformation jIInformation = new JIInformation(id, name);
+        String firstName = employee.getFirstName();
+        String lastName = employee.getLastName();
+        String email = employee.getEmail();
+        String phoneNumber = String.valueOf("0" + employee.getPhoneNumber());
+        String manager = String.valueOf(employee.getManager().getFirstName() + " " + employee.getManager().getLastName());
+        String job = jobs.getName();
+        JIInformation jIInformation = new JIInformation(id, firstName, lastName, email, phoneNumber, manager, job);
         this.jLHome.add(jIInformation);
         jIInformation.show();
     }//GEN-LAST:event_informationActionPerformed
 
     private void historyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historyActionPerformed
-        JIHistory jIHistory = new JIHistory();
+        LeaveRequest leaveRequest = ilrc.getById("1");
+        LeaveRequestStatus leaveRequestStatus = ilrsc.getById("1");
+        String id = String.valueOf(leaveRequest.getId());
+        String from = String.valueOf(leaveRequest.getStartDate());
+        String to = String.valueOf(leaveRequest.getEndDate());
+        String notes = leaveRequest.getNotes();
+        String type = String.valueOf(leaveRequest.getType().getName());
+//        String status = leaveRequestStatus.getStatus().getName();
+        
+        JIHistory jIHistory = new JIHistory(id, from, to, notes, type);
         this.jLHome.add(jIHistory);
         jIHistory.show();
     }//GEN-LAST:event_historyActionPerformed
