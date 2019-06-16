@@ -6,12 +6,22 @@
 package views;
 
 import controllers.AccountController;
+import controllers.EmployeeController;
 import controllers.RoleController;
 import icontrollers.IAccountController;
+import icontrollers.IEmployeeController;
 import icontrollers.IRoleController;
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import models.Account;
+import models.Employee;
 import models.Role;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
@@ -21,10 +31,12 @@ import tools.HibernateUtil;
  * @author ACER
  */
 public class JIAccount extends javax.swing.JInternalFrame {
+
     SessionFactory factory = HibernateUtil.getSessionFactory();
     IAccountController iac = new AccountController(factory);
+    IEmployeeController iec = new EmployeeController(factory);
     IRoleController irc = new RoleController(factory);
-    
+
     public JIAccount(String username, String idEmp) {
         initComponents();
         lblEmpName.setText(username);
@@ -33,34 +45,75 @@ public class JIAccount extends javax.swing.JInternalFrame {
         checkAccount(idEmp);
         getRole();
     }
-    
-    private void checkAccount(String id){
+
+    private void checkAccount(String id) {
         Account account = iac.getById(id);
-            
+
         if (account != null) {
             String idEmp = String.valueOf(account.getId());
             textEmpId.setText(idEmp);
             textUsername.setText(account.getUsername());
             textPassword.setText(account.getPassword());
         }
-        
+
         textEmpId.setText(id);
     }
-    
-    private void resetTextAccount(){
+
+    private void resetTextAccount() {
         textUsername.setText("");
         textPassword.setText("");
         comboBoxRole.setSelectedIndex(0);
     }
-    
-    private void getRole(){
+
+    private void getRole() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         for (Role role : irc.getAll()) {
             //jCountry.addItem(country.getId() + " = " + country.getName());
             comboBoxRole.addItem(role.getName());
-            
+
             ///model.addElement(new Country(country.getId(), country.getName()));
         }
+    }
+
+    private void sendMail(String email, String username, String password, String name) {
+        final String auth_host = "smtp.gmail.com";
+        final String auth_port = "587";
+        final String auth_email = "bootcamp.java26@gmail.com";
+        final String auth_password = "Bootcamp26";
+
+        final Properties props = new Properties();
+        props.put("mail.smtp.host", auth_host);
+        props.put("mail.smtp.port", auth_port);
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        try {
+            Session mailSession = Session.getInstance(props,
+                    new javax.mail.Authenticator() {
+                protected PasswordAuthentication
+                        getPasswordAuthentication() {
+                    return new PasswordAuthentication(auth_email, auth_password);
+                }
+            });
+
+            Message message = new MimeMessage(mailSession);
+            message.setFrom(new InternetAddress(auth_email));
+
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(email));
+            message.setSubject("Your Account Already Set");
+            message.setText("Dear " + name + "\n'Akun Anda dari aplikasi Leave Request sudah dibuat. Berikut informasi account anda : \n'"
+                    +"Username = "+username+"\n"
+                    +"Password = "+password+"\n"
+                    +"Dimohon disimpan baik-baik informasi Account ini agar tidak disalah gunakan.\n\nBest Regards Admin");
+            Transport.send(message);
+
+            JOptionPane.showMessageDialog(null, "Account Sudah teregistrasi");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        
     }
 
     /**
@@ -73,7 +126,6 @@ public class JIAccount extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        textPassword = new javax.swing.JTextField();
         comboBoxRole = new javax.swing.JComboBox<>();
         lblAccRole = new javax.swing.JLabel();
         buttonSave = new javax.swing.JButton();
@@ -88,14 +140,9 @@ public class JIAccount extends javax.swing.JInternalFrame {
         lblUsername = new javax.swing.JLabel();
         lblEmpName = new javax.swing.JLabel();
         lblPassword = new javax.swing.JLabel();
+        textPassword = new javax.swing.JPasswordField();
 
         setClosable(true);
-
-        textPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textPasswordActionPerformed(evt);
-            }
-        });
 
         comboBoxRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Role" }));
 
@@ -151,41 +198,42 @@ public class JIAccount extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(jLabel5))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(99, 99, 99)
-                        .addComponent(lblEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(buttonSave)
-                        .addGap(18, 18, 18)
-                        .addComponent(buttonReset)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonDelete))
-                    .addComponent(lblPassword)
-                    .addComponent(textPassword)
-                    .addComponent(lblUsername)
-                    .addComponent(textUsername)
-                    .addComponent(lblEmpId)
-                    .addComponent(textEmpId)
-                    .addComponent(lblAccRole)
-                    .addComponent(comboBoxRole, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(100, 100, 100))
             .addComponent(jSeparator1)
             .addGroup(layout.createSequentialGroup()
                 .addGap(227, 227, 227)
                 .addComponent(jLabel6)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(99, 99, 99)
+                        .addComponent(lblEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(jLabel5)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(textPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(buttonSave)
+                            .addGap(18, 18, 18)
+                            .addComponent(buttonReset)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(buttonDelete))
+                        .addComponent(lblPassword)
+                        .addComponent(lblUsername)
+                        .addComponent(textUsername)
+                        .addComponent(lblEmpId)
+                        .addComponent(textEmpId)
+                        .addComponent(lblAccRole)
+                        .addComponent(comboBoxRole, 0, 236, Short.MAX_VALUE)))
+                .addGap(100, 100, 100))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
+                .addContainerGap(21, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -222,10 +270,6 @@ public class JIAccount extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textPasswordActionPerformed
-
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonResetActionPerformed
@@ -259,7 +303,14 @@ public class JIAccount extends javax.swing.JInternalFrame {
 //                System.out.println(textEmpId.getText());
 //                System.out.println(textUsername.getText());
 //                System.out.println(textPassword.getText());
-                JOptionPane.showMessageDialog(null, iac.save(textEmpId.getText(), textUsername.getText(), textPassword.getText()));
+                String password = String.valueOf(textPassword.getPassword());
+                JOptionPane.showMessageDialog(null, iac.save(textEmpId.getText(), textUsername.getText(), password));
+                String id = textEmpId.getText();
+                Employee employee = iec.getById(id);
+                String email = employee.getEmail();
+                String username = textUsername.getText();
+                String name = employee.getFirstName()+" "+employee.getLastName();
+                sendMail(email, username, password, name);
                 //updateTableEmp("");
                 //resetTextAccount();
             }
@@ -281,7 +332,7 @@ public class JIAccount extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JTextField textEmpId;
-    private javax.swing.JTextField textPassword;
+    private javax.swing.JPasswordField textPassword;
     private javax.swing.JTextField textUsername;
     // End of variables declaration//GEN-END:variables
 }

@@ -10,20 +10,6 @@ import controllers.EmployeeController;
 import daos.GeneralDAO;
 import icontrollers.IAccountController;
 import icontrollers.IEmployeeController;
-import java.util.Properties;
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
-import javax.mail.Message;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import models.Account;
 import models.Employee;
@@ -219,43 +205,6 @@ public class JLogin extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, result);
         }
-//        final String auth_host = "smtp.gmail.com";
-//        final String auth_port = "587";
-//        final String auth_email = "bootcamp.java26@gmail.com";
-//        final String auth_password = "Bootcamp26";
-//
-//        final Properties props = new Properties();
-//        props.put("mail.smtp.host", auth_host);
-//        props.put("mail.smtp.port", auth_port);
-//        props.put("mail.smtp.auth", "true");
-//        props.put("mail.smtp.starttls.enable", "true");
-//
-//        try {
-//            Session mailSession = Session.getInstance(props,
-//                    new javax.mail.Authenticator() {
-//                protected PasswordAuthentication
-//                        getPasswordAuthentication() {
-//                    return new PasswordAuthentication(auth_email, auth_password);
-//                }
-//            });
-//
-//            Message message = new MimeMessage(mailSession);
-//            message.setFrom(new InternetAddress(auth_email));
-//
-//            message.setRecipients(Message.RecipientType.TO,
-//                    InternetAddress.parse(txtEmail.getText()));
-//            message.setSubject("Notification Login");
-//            message.setText("Dear " + txtEmail.getText() + " 'Akun Leave Request Anda baru login dari aplikasi Leave Request. Anda mendapat email ini untuk memastikan ini memang Anda'");
-//            Transport.send(message);
-//
-//            JOptionPane.showMessageDialog(null, "Anda Berhasil Login");
-
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//        getContentPane().add(btnLogin);
-//        this.setVisible(false);
-//        new JHomeEmployee().setVisible(true);
 
     }//GEN-LAST:event_btnLoginActionPerformed
 
