@@ -10,6 +10,7 @@ import controllers.RoleController;
 import icontrollers.IAccountController;
 import icontrollers.IRoleController;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import models.Account;
 import models.Role;
 import org.hibernate.SessionFactory;
@@ -29,8 +30,8 @@ public class JIAccount extends javax.swing.JInternalFrame {
         lblEmpName.setText(username);
         textEmpId.setEditable(false);
         textEmpId.setText(idEmp);
+        checkAccount(idEmp);
         getRole();
-        //checkAccount(idEmp);
     }
     
     private void checkAccount(String id){
@@ -77,7 +78,7 @@ public class JIAccount extends javax.swing.JInternalFrame {
         lblAccRole = new javax.swing.JLabel();
         buttonSave = new javax.swing.JButton();
         buttonReset = new javax.swing.JButton();
-        buttonEdit = new javax.swing.JButton();
+        buttonDelete = new javax.swing.JButton();
         lblEmpId = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         textEmpId = new javax.swing.JTextField();
@@ -114,10 +115,10 @@ public class JIAccount extends javax.swing.JInternalFrame {
             }
         });
 
-        buttonEdit.setText("Edit");
-        buttonEdit.addActionListener(new java.awt.event.ActionListener() {
+        buttonDelete.setText("Delete");
+        buttonDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonEditActionPerformed(evt);
+                buttonDeleteActionPerformed(evt);
             }
         });
 
@@ -162,10 +163,10 @@ public class JIAccount extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(buttonSave)
-                        .addGap(26, 26, 26)
+                        .addGap(18, 18, 18)
                         .addComponent(buttonReset)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonEdit))
+                        .addComponent(buttonDelete))
                     .addComponent(lblPassword)
                     .addComponent(textPassword)
                     .addComponent(lblUsername)
@@ -214,7 +215,7 @@ public class JIAccount extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(buttonSave)
                             .addComponent(buttonReset)
-                            .addComponent(buttonEdit))))
+                            .addComponent(buttonDelete))))
                 .addGap(73, 73, 73))
         );
 
@@ -229,9 +230,13 @@ public class JIAccount extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonResetActionPerformed
 
-    private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_buttonEditActionPerformed
+    private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
+        int confirm = JOptionPane.showConfirmDialog(this, "Apakah anda yakin melakukan delete? ", "confirm delete ", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (confirm == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(null, iac.delete(textEmpId.getText()));
+            this.dispose();
+        }
+    }//GEN-LAST:event_buttonDeleteActionPerformed
 
     private void textEmpIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textEmpIdActionPerformed
         // TODO add your handling code here:
@@ -242,12 +247,25 @@ public class JIAccount extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_textUsernameActionPerformed
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
-        // TODO add your handling code here:
+        if (textEmpId.getText().trim().isEmpty() || textUsername.getText().trim().isEmpty() || textPassword.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Silahkan isi semua data terlebih dahulu");
+
+        } else if (comboBoxRole.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Anda belum memilih Country");
+
+        } else {
+            int confirm = JOptionPane.showConfirmDialog(this, "Apakah anda yakin ingin menyimpan data? ", "confirm Save ", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (confirm == JOptionPane.YES_OPTION) {
+                JOptionPane.showMessageDialog(null, iac.save(textEmpId.getText(), textUsername.getText(), textPassword.getText()));
+                //updateTableEmp("");
+                resetTextAccount();
+            }
+        }
     }//GEN-LAST:event_buttonSaveActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonEdit;
+    private javax.swing.JButton buttonDelete;
     private javax.swing.JButton buttonReset;
     private javax.swing.JButton buttonSave;
     private javax.swing.JComboBox<String> comboBoxRole;

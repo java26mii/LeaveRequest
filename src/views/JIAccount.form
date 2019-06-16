@@ -37,10 +37,10 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="buttonSave" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="buttonReset" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="buttonEdit" min="-2" max="-2" attributes="0"/>
+                      <Component id="buttonDelete" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="lblPassword" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="textPassword" alignment="0" max="32767" attributes="0"/>
@@ -95,7 +95,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="buttonSave" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="buttonReset" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="buttonEdit" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="buttonDelete" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -143,12 +143,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonResetActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="buttonEdit">
+    <Component class="javax.swing.JButton" name="buttonDelete">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Edit"/>
+        <Property name="text" type="java.lang.String" value="Delete"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonEditActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonDeleteActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblEmpId">
