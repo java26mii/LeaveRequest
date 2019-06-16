@@ -5,17 +5,32 @@
  */
 package views;
 
+import controllers.LeaveRequestController;
+import daos.GeneralDAO;
+import models.LeaveRequest;
+import org.hibernate.SessionFactory;
+import tools.HibernateUtil;
+
 /**
  *
  * @author Arif Fridasari
  */
 public class JIInformation extends javax.swing.JInternalFrame {
 
+    SessionFactory factory = HibernateUtil.getSessionFactory();
+
+    GeneralDAO<LeaveRequest> dAO = new GeneralDAO<>(factory, LeaveRequest.class);
+
     /**
      * Creates new form JIInformation
      */
     public JIInformation() {
         initComponents();
+        information();
+    }
+
+    private void information() {
+
     }
 
     /**
@@ -53,15 +68,15 @@ public class JIInformation extends javax.swing.JInternalFrame {
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
+        txtId = new javax.swing.JLabel();
+        txtName = new javax.swing.JLabel();
+        txtCompany = new javax.swing.JLabel();
+        txtDepartment = new javax.swing.JLabel();
+        txtPosition = new javax.swing.JLabel();
+        txtALLY = new javax.swing.JLabel();
+        txtALCY = new javax.swing.JLabel();
+        txtTL = new javax.swing.JLabel();
+        txtEL = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
 
         setClosable(true);
@@ -174,32 +189,32 @@ public class JIInformation extends javax.swing.JInternalFrame {
         jLabel23.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel23.setText(":");
 
-        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel24.setText("ID");
+        txtId.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtId.setText("ID");
 
-        jLabel25.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel25.setText("Name");
+        txtName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtName.setText("Name");
 
-        jLabel26.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel26.setText("Company");
+        txtCompany.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtCompany.setText("Company");
 
-        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel27.setText("Department");
+        txtDepartment.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtDepartment.setText("Department");
 
-        jLabel28.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel28.setText("Position");
+        txtPosition.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtPosition.setText("Position");
 
-        jLabel29.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel29.setText("Available Leave (Last Year) ");
+        txtALLY.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtALLY.setText("Available Leave (Last Year) ");
 
-        jLabel30.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel30.setText("Available Leave (Current Year) ");
+        txtALCY.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtALCY.setText("Available Leave (Current Year) ");
 
-        jLabel31.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel31.setText("Total Leave");
+        txtTL.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtTL.setText("Total Leave");
 
-        jLabel32.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel32.setText("Eligable Leave");
+        txtEL.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtEL.setText("Eligable Leave");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -234,15 +249,15 @@ public class JIInformation extends javax.swing.JInternalFrame {
                     .addComponent(jLabel15))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel24)
-                    .addComponent(jLabel25)
-                    .addComponent(jLabel26)
-                    .addComponent(jLabel27)
-                    .addComponent(jLabel28)
-                    .addComponent(jLabel29)
-                    .addComponent(jLabel30)
-                    .addComponent(jLabel31)
-                    .addComponent(jLabel32))
+                    .addComponent(txtId)
+                    .addComponent(txtName)
+                    .addComponent(txtCompany)
+                    .addComponent(txtDepartment)
+                    .addComponent(txtPosition)
+                    .addComponent(txtALLY)
+                    .addComponent(txtALCY)
+                    .addComponent(txtTL)
+                    .addComponent(txtEL))
                 .addGap(86, 86, 86))
         );
         jPanel1Layout.setVerticalGroup(
@@ -253,27 +268,27 @@ public class JIInformation extends javax.swing.JInternalFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel15)
-                            .addComponent(jLabel24))
+                            .addComponent(txtId))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel25, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtName, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel26)
+                                .addComponent(txtCompany)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel27)
+                                .addComponent(txtDepartment)
                                 .addGap(20, 20, 20)
-                                .addComponent(jLabel28)
+                                .addComponent(txtPosition)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel29)
+                                .addComponent(txtALLY)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel30)
+                                .addComponent(txtALCY)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel31)
+                                .addComponent(txtTL)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel32))
+                                .addComponent(txtEL))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel17)
                                 .addGap(18, 18, 18)
@@ -385,16 +400,7 @@ public class JIInformation extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -405,5 +411,14 @@ public class JIInformation extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JLabel txtALCY;
+    private javax.swing.JLabel txtALLY;
+    private javax.swing.JLabel txtCompany;
+    private javax.swing.JLabel txtDepartment;
+    private javax.swing.JLabel txtEL;
+    private javax.swing.JLabel txtId;
+    private javax.swing.JLabel txtName;
+    private javax.swing.JLabel txtPosition;
+    private javax.swing.JLabel txtTL;
     // End of variables declaration//GEN-END:variables
 }

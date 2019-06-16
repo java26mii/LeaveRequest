@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import models.Account;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -132,5 +133,51 @@ public class GeneralDAO<T> implements IGeneralDAO<T> {
         }
 
         return result;
+    }
+
+    @Override
+    public Account login(String username, String password) {
+        Account account = null;
+        session = this.factory.openSession();
+        transaction = session.beginTransaction();
+        try {
+            String hql = "FROM " + t.getClass().getSimpleName() + " WHERE username = :usrnm AND password = :paswd ORDER BY 1";
+            Query query = session.createQuery(hql);
+            query.setParameter("usrnm", username);
+            query.setParameter("paswd", password);
+            account = (Account) query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            session.close();
+        }
+
+        return account;
+    }
+
+    @Override
+    public Account loginEmail(String username, String email, String password) {
+        Account account = null;
+        session = this.factory.openSession();
+        transaction = session.beginTransaction();
+        try {
+            String hql = "FROM " + t.getClass().getSimpleName() + " WHERE email = :email AND password = :password ORDER BY 1";
+            Query query = session.createQuery(hql);
+            query.setParameter("usrnm", username);
+            query.setParameter("paswd", password);
+            account = (Account) query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            session.close();
+        }
+
+        return account;
     }
 }

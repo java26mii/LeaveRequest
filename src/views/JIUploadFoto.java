@@ -5,12 +5,22 @@
  */
 package views;
 
+import daos.GeneralDAO;
 import java.awt.Image;
 import java.io.File;
+import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import javax.imageio.ImageIO;
+import javax.mail.Session;
+import javax.persistence.EntityManager;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import models.Account;
+import org.hibernate.SessionFactory;
+import tools.HibernateUtil;
+import uploads.PicUtil;
 
 /**
  *
@@ -18,13 +28,22 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class JIUploadFoto extends javax.swing.JInternalFrame {
 
+    SessionFactory factory = HibernateUtil.getSessionFactory();
+
+    GeneralDAO<Account> dAO = new GeneralDAO<>(factory, Account.class);
+
     /**
      * Creates new form JIUploadFoto
      */
     public JIUploadFoto() {
         initComponents();
+//        upload();
     }
 
+//    public void upload(){
+//        Employee employee = new Employee();
+//        employee.getId();
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,7 +54,7 @@ public class JIUploadFoto extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         choose = new javax.swing.JButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        btnSave = new javax.swing.JToggleButton();
         jPanel1 = new javax.swing.JPanel();
         photo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -55,10 +74,10 @@ public class JIUploadFoto extends javax.swing.JInternalFrame {
             }
         });
 
-        jToggleButton1.setText("Save");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                btnSaveActionPerformed(evt);
             }
         });
 
@@ -70,7 +89,7 @@ public class JIUploadFoto extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(145, Short.MAX_VALUE)
                 .addComponent(photo)
                 .addGap(123, 123, 123))
         );
@@ -103,82 +122,94 @@ public class JIUploadFoto extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(choose, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(131, 131, 131))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(choose, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(choose)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addComponent(jToggleButton1)
+                .addGap(18, 18, 18)
+                .addComponent(btnSave)
                 .addGap(34, 34, 34))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
-
-    private void chooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseActionPerformed
-        JFileChooser chooser = new JFileChooser();
-
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "JPG, GIF, and PNG Images", "jpg", "gif", "png");
-
-        chooser.setFileFilter(filter);
-
-        chooser.showOpenDialog(null);
-
-        File file = chooser.getSelectedFile();
-
-//        choose.setText(file.getSelectedFile().toString());
-
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         try {
-
-            Image image = ImageIO.read(file);
-
-            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(105, 105, 300));
-
-            photo.setIcon(imageIcon);
-
-            photo.setText("");
-
+            Account account = new Account();
+            account.setId(new Long("100"));
+            account.setImage(PicUtil.readImage());
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
-//        JFileChooser jfc = new JFileChooser();
-//        int ret = jfc.showDialog(null, "Choose file");
-//        if (ret == JFileChooser.APPROVE_OPTION) {
-//            choose.setText(jfc.getSelectedFile().toString());
+
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void chooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseActionPerformed
+        photo.setIcon(PicUtil.getImage());
+
+//        /**
+//         *  
+//         */
+//        JFileChooser chooser = new JFileChooser();
+//
+//        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+//                "JPG, GIF, and PNG Images", "jpg", "gif", "png");
+//
+//        chooser.setFileFilter(filter);
+//
+//        chooser.showOpenDialog(null);
+//
+//        File file = chooser.getSelectedFile();
+//
+//        try {
+//
+//            Image image = ImageIO.read(file);
+//
+//            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(105, 105, 300));
+//
+//            photo.setIcon(imageIcon);
+//
+//            photo.setText("");
+//            
+//            FileInputStream inputStream = new FileInputStream(gambar);
+//
+//        } catch (Exception e) {
+//
 //        }
-//        getContentPane().add(choose);
+//        /**
+//         * 
+//         */
+
     }//GEN-LAST:event_chooseActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton btnSave;
     private javax.swing.JButton choose;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel photo;
     // End of variables declaration//GEN-END:variables
+    byte[] image = null;
+
 }
