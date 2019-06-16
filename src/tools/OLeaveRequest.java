@@ -7,6 +7,7 @@ package tools;
 
 import controllers.AnnualLeaveController;
 import daos.GeneralDAO;
+import models.Account;
 import models.AnnualLeave;
 import org.hibernate.SessionFactory;
 
@@ -22,13 +23,18 @@ public class OLeaveRequest {
     public static void main(String[] args) {
         SessionFactory factory = HibernateUtil.getSessionFactory();
         System.out.println(factory);
+        
+        
+        GeneralDAO<Account> edao = new GeneralDAO<>(factory, Account.class);
 
-        GeneralDAO<AnnualLeave> dDao = new GeneralDAO<>(factory, AnnualLeave.class);
-        AnnualLeaveController dc = new AnnualLeaveController(factory);
-        for (AnnualLeave annualLeave : dDao.getData("")) {
-            System.out.println(annualLeave.getId());
-            System.out.println(annualLeave.getRemain());
-        }
+        System.out.println(edao.getLogin(""));
+
+//        GeneralDAO<AnnualLeave> dDao = new GeneralDAO<>(factory, AnnualLeave.class);
+//        AnnualLeaveController dc = new AnnualLeaveController(factory);
+//        for (AnnualLeave annualLeave : dDao.getData("")) {
+//            System.out.println(annualLeave.getId());
+//            System.out.println(annualLeave.getRemain());
+//        }
 
     }
 }

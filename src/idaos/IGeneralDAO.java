@@ -28,5 +28,5 @@ public interface IGeneralDAO<T> {
 
     public Account login(String username, String password);
 
-    public Account loginEmail(String username, String email, String password);
+    public List<T> getLogin(Object keyword);
 }

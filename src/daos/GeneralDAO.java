@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import models.Account;
+import models.Employee;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -52,10 +53,7 @@ public class GeneralDAO<T> implements IGeneralDAO<T> {
         }
         try {
             Query query = session.createQuery(hql + " ORDER BY 1");
-//            query.setParameter("table", table.getClass().getSimpleName());
-//            if (!keyword.equals("")) {
-//                query.setParameter("keyword", "%" + keyword + "%");
-//            }
+
             objectList = query.list();
         } catch (Exception e) {
             e.printStackTrace();
@@ -159,16 +157,20 @@ public class GeneralDAO<T> implements IGeneralDAO<T> {
     }
 
     @Override
-    public Account loginEmail(String username, String email, String password) {
+    public List<T> getLogin(Object keyword) {
         Account account = null;
+        Employee employee = null;
+        List<T> objectList = new ArrayList<>();
         session = this.factory.openSession();
         transaction = session.beginTransaction();
         try {
-            String hql = "FROM " + t.getClass().getSimpleName() + " WHERE email = :email AND password = :password ORDER BY 1";
+            String hql = "SELECT e.email, ac.password FROM Account ac, Employee e WHERE ac.id = e.id";
             Query query = session.createQuery(hql);
-            query.setParameter("usrnm", username);
-            query.setParameter("paswd", password);
+            query.setParameter("e.email", employee.getEmail());
+            query.setParameter("ac.password", account.getPassword());
             account = (Account) query.uniqueResult();
+
+//            objectList = query.list();
         } catch (Exception e) {
             e.printStackTrace();
             if (transaction != null) {
@@ -178,6 +180,8 @@ public class GeneralDAO<T> implements IGeneralDAO<T> {
             session.close();
         }
 
-        return account;
+        return objectList;
+
     }
+
 }

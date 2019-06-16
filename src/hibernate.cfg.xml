@@ -41,18 +41,25 @@ Contributor(s):
 -->
 <hibernate-configuration>
   <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
     <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
     <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:XE</property>
-    <property name="hibernate.connection.username">lr</property>
+    <property name="hibernate.connection.username">LR</property>
     <property name="hibernate.connection.password">lr26</property>
-    <!--    <mapping class="models.Account"/>
-    <mapping class="models.AnnualLeave"/>
-    <mapping class="models.Employee"/>-->
-    <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
     <property name="hibernate.default_schema">lr</property>
     <property name="hibernate.show_sql">false</property>
     <property name="hibernate.connection.autocommit">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
-    <mapping package="models"/>
+    <mapping class="models.Account"/>
+    <mapping class="models.AnnualLeave"/>
+    <mapping class="models.Employee"/>
+    <mapping class="models.EmployeeJob"/>
+    <mapping class="models.EmployeeRole"/>
+    <mapping class="models.Job"/>
+    <mapping class="models.LeaveRequest"/>
+    <mapping class="models.LeaveRequestStatus"/>
+    <mapping class="models.LeaveType"/>
+    <mapping class="models.Role"/>
+    <mapping class="models.Status"/>
   </session-factory>
 </hibernate-configuration>

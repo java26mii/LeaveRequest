@@ -5,12 +5,21 @@
  */
 package views;
 
+import controllers.EmployeeController;
+import icontrollers.IEmployeeController;
+import models.Employee;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import tools.HibernateUtil;
+
 /**
  *
  * @author Arif Fridasari
  */
 public class JHomeEmployee extends javax.swing.JFrame {
-
+    SessionFactory factory = HibernateUtil.getSessionFactory();
+    IEmployeeController iac = new EmployeeController(factory);
     public JHomeEmployee() {
         initComponents();
     }
@@ -284,7 +293,10 @@ public class JHomeEmployee extends javax.swing.JFrame {
     }//GEN-LAST:event_FormRequestActionPerformed
 
     private void informationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_informationActionPerformed
-        JIInformation jIInformation = new JIInformation();
+        Employee employee = iac.getById("100");
+        String id = String.valueOf(employee.getId());
+        String name= employee.getFirstName();
+        JIInformation jIInformation = new JIInformation(id, name);
         this.jLHome.add(jIInformation);
         jIInformation.show();
     }//GEN-LAST:event_informationActionPerformed

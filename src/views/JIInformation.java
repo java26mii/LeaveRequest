@@ -24,9 +24,11 @@ public class JIInformation extends javax.swing.JInternalFrame {
     /**
      * Creates new form JIInformation
      */
-    public JIInformation() {
+    public JIInformation(String id, String name) {
         initComponents();
-        information();
+        txtId.setText(id);
+        txtName.setText(name);
+//        information();
     }
 
     private void information() {
@@ -70,9 +72,9 @@ public class JIInformation extends javax.swing.JInternalFrame {
         jLabel23 = new javax.swing.JLabel();
         txtId = new javax.swing.JLabel();
         txtName = new javax.swing.JLabel();
-        txtCompany = new javax.swing.JLabel();
-        txtDepartment = new javax.swing.JLabel();
-        txtPosition = new javax.swing.JLabel();
+        txtLastName = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JLabel();
+        txtPhone = new javax.swing.JLabel();
         txtALLY = new javax.swing.JLabel();
         txtALCY = new javax.swing.JLabel();
         txtTL = new javax.swing.JLabel();
@@ -151,16 +153,16 @@ public class JIInformation extends javax.swing.JInternalFrame {
         jLabel3.setText("ID");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setText("Name");
+        jLabel4.setText("First Name");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel5.setText("Company");
+        jLabel5.setText("Last Name");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel6.setText("Department");
+        jLabel6.setText("Email");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel8.setText("Position");
+        jLabel8.setText("Phone Number");
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel15.setText(":");
@@ -195,14 +197,14 @@ public class JIInformation extends javax.swing.JInternalFrame {
         txtName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtName.setText("Name");
 
-        txtCompany.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtCompany.setText("Company");
+        txtLastName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtLastName.setText("Company");
 
-        txtDepartment.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtDepartment.setText("Department");
+        txtEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtEmail.setText("Department");
 
-        txtPosition.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtPosition.setText("Position");
+        txtPhone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtPhone.setText("Position");
 
         txtALLY.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtALLY.setText("Available Leave (Last Year) ");
@@ -251,9 +253,9 @@ public class JIInformation extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtId)
                     .addComponent(txtName)
-                    .addComponent(txtCompany)
-                    .addComponent(txtDepartment)
-                    .addComponent(txtPosition)
+                    .addComponent(txtLastName)
+                    .addComponent(txtEmail)
+                    .addComponent(txtPhone)
                     .addComponent(txtALLY)
                     .addComponent(txtALCY)
                     .addComponent(txtTL)
@@ -276,11 +278,11 @@ public class JIInformation extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtCompany)
+                                .addComponent(txtLastName)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtDepartment)
+                                .addComponent(txtEmail)
                                 .addGap(20, 20, 20)
-                                .addComponent(txtPosition)
+                                .addComponent(txtPhone)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtALLY)
                                 .addGap(18, 18, 18)
@@ -413,12 +415,12 @@ public class JIInformation extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JLabel txtALCY;
     private javax.swing.JLabel txtALLY;
-    private javax.swing.JLabel txtCompany;
-    private javax.swing.JLabel txtDepartment;
     private javax.swing.JLabel txtEL;
+    private javax.swing.JLabel txtEmail;
     private javax.swing.JLabel txtId;
+    private javax.swing.JLabel txtLastName;
     private javax.swing.JLabel txtName;
-    private javax.swing.JLabel txtPosition;
+    private javax.swing.JLabel txtPhone;
     private javax.swing.JLabel txtTL;
     // End of variables declaration//GEN-END:variables
 }
