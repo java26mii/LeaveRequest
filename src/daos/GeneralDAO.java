@@ -112,7 +112,7 @@ public class GeneralDAO<T> implements IGeneralDAO<T> {
         return location;
     }
 
-    @Override
+     @Override
     public boolean register(T object) {
         boolean result = false;
         session = this.factory.openSession();
@@ -134,15 +134,14 @@ public class GeneralDAO<T> implements IGeneralDAO<T> {
     }
 
     @Override
-    public Account login(String username, String password) {
+    public Account getAccount(String username) {
         Account account = null;
         session = this.factory.openSession();
         transaction = session.beginTransaction();
         try {
-            String hql = "FROM " + t.getClass().getSimpleName() + " WHERE username = :usrnm AND password = :paswd ORDER BY 1";
+            String hql = "FROM " + t.getClass().getSimpleName() + " WHERE username = :username";
             Query query = session.createQuery(hql);
-            query.setParameter("usrnm", username);
-            query.setParameter("paswd", password);
+            query.setParameter("username", username);
             account = (Account) query.uniqueResult();
         } catch (Exception e) {
             e.printStackTrace();
@@ -155,23 +154,17 @@ public class GeneralDAO<T> implements IGeneralDAO<T> {
 
         return account;
     }
-
+    
     @Override
-    public List<T> getLogin(Object keyword) {
-        Account account = null;
+    public Employee getEmployee(String email) {
         Employee employee = null;
-        List<T> objectList = new ArrayList<>();
         session = this.factory.openSession();
         transaction = session.beginTransaction();
         try {
-//            SELECT e.email, ac.password FROM Account ac, Employee e WHERE ac.id = e.id AND e.email LIKE 'arief.fridasari@gmail.com'
-            String hql = "SELECT e.email, ac.password FROM Account ac, Employee e WHERE ac.id = e.id";
+            String hql = "FROM Employee e WHERE e.email = :mail";
             Query query = session.createQuery(hql);
-            query.setParameter("e.email", employee.getEmail());
-            query.setParameter("ac.password", account.getPassword());
-            account = (Account) query.uniqueResult();
-
-//            objectList = query.list();
+            query.setParameter("mail", email);
+            employee = (Employee) query.uniqueResult();
         } catch (Exception e) {
             e.printStackTrace();
             if (transaction != null) {
@@ -181,8 +174,7 @@ public class GeneralDAO<T> implements IGeneralDAO<T> {
             session.close();
         }
 
-        return objectList;
-
+        return employee;
     }
 
 }

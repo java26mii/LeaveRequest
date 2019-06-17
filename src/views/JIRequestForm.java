@@ -416,7 +416,7 @@ public class JIRequestForm extends javax.swing.JInternalFrame {
         }
         getContentPane().add(btnSubmit);
         this.setVisible(false);
-        new JHomeEmployee().setVisible(true);
+        new JHomeEmployee("","").setVisible(true);
 
     }//GEN-LAST:event_btnSubmitActionPerformed
 

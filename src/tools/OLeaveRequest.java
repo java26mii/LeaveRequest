@@ -27,7 +27,7 @@ public class OLeaveRequest {
         
         GeneralDAO<Account> edao = new GeneralDAO<>(factory, Account.class);
 
-        System.out.println(edao.getLogin(""));
+//        System.out.println(edao.getLogin(""));
 
 //        GeneralDAO<AnnualLeave> dDao = new GeneralDAO<>(factory, AnnualLeave.class);
 //        AnnualLeaveController dc = new AnnualLeaveController(factory);
