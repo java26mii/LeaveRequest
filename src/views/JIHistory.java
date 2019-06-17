@@ -19,14 +19,17 @@ public class JIHistory extends javax.swing.JInternalFrame {
     /**
      * Creates new form JIHistory
      */
-    public JIHistory(String id, String from, String to, String notes ) {
+    public JIHistory(String id, String from, String to, String notes) {
         initComponents();
         txtId.setText(id);
         txtStartDate.setText(from);
+//        txtStartDate.setDateFormatString("MM/dd/yyyy");
         txtEndDate.setText(to);
         txtNotes.setText(notes);
 //        txtStatus.setText(status);
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

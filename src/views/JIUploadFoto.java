@@ -155,7 +155,7 @@ public class JIUploadFoto extends javax.swing.JInternalFrame {
         try {
             Account account = new Account();
             account.setId(new Long("100"));
-            account.setImage(PicUtil.readImage());
+//            account.setImage(PicUtil.readImage());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -164,40 +164,40 @@ public class JIUploadFoto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void chooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseActionPerformed
-        photo.setIcon(PicUtil.getImage());
+//        photo.setIcon(PicUtil.getImage());
 
-//        /**
-//         *  
-//         */
-//        JFileChooser chooser = new JFileChooser();
-//
-//        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-//                "JPG, GIF, and PNG Images", "jpg", "gif", "png");
-//
-//        chooser.setFileFilter(filter);
-//
-//        chooser.showOpenDialog(null);
-//
-//        File file = chooser.getSelectedFile();
-//
-//        try {
-//
-//            Image image = ImageIO.read(file);
-//
-//            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(105, 105, 300));
-//
-//            photo.setIcon(imageIcon);
-//
-//            photo.setText("");
-//            
+        /**
+         *  
+         */
+        JFileChooser chooser = new JFileChooser();
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "JPG, GIF, and PNG Images", "jpg", "gif", "png");
+
+        chooser.setFileFilter(filter);
+
+        chooser.showOpenDialog(null);
+
+        File file = chooser.getSelectedFile();
+
+        try {
+
+            Image image = ImageIO.read(file);
+
+            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(105, 105, 300));
+
+            photo.setIcon(imageIcon);
+
+            photo.setText("");
+            
 //            FileInputStream inputStream = new FileInputStream(gambar);
-//
-//        } catch (Exception e) {
-//
-//        }
-//        /**
-//         * 
-//         */
+
+        } catch (Exception e) {
+
+        }
+        /**
+         * 
+         */
 
     }//GEN-LAST:event_chooseActionPerformed
 
