@@ -6,7 +6,17 @@
 package views;
 
 import controllers.EmployeeController;
+import controllers.JobController;
+import controllers.LeaveRequestController;
+import controllers.LeaveRequestStatusController;
 import icontrollers.IEmployeeController;
+import icontrollers.IJobController;
+import icontrollers.ILeaveRequestController;
+import icontrollers.ILeaveRequestStatusController;
+import models.Employee;
+import models.Job;
+import models.LeaveRequest;
+import models.LeaveRequestStatus;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
 
@@ -16,13 +26,20 @@ import tools.HibernateUtil;
  */
 public class JHomeEmployee extends javax.swing.JFrame {
     SessionFactory factory = HibernateUtil.getSessionFactory();
-    IEmployeeController iec = new EmployeeController(factory);
+    IEmployeeController iac = new EmployeeController(factory);
+    IJobController ijc = new JobController(factory);
+    ILeaveRequestController ilrc = new LeaveRequestController(factory);
+    ILeaveRequestStatusController ilrsc = new LeaveRequestStatusController(factory);
     
     public JHomeEmployee(String id, String username) {
         initComponents();
         lblGreeting.setText("Hai, "+username+" !");
         lblUser.setText(id);
         lblUser.setVisible(false);
+        buttonEmp.setVisible(false);
+        lblEmpMng.setVisible(false);
+        buttonManager.setVisible(false);
+        lblManager.setVisible(false);
     }
 
     /**
@@ -49,9 +66,11 @@ public class JHomeEmployee extends javax.swing.JFrame {
         lblGreeting = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         uploadPhoto = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
+        lblEmpMng = new javax.swing.JLabel();
         history = new javax.swing.JButton();
         lblUser = new javax.swing.JLabel();
+        lblManager = new javax.swing.JLabel();
+        buttonManager = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -173,8 +192,8 @@ public class JHomeEmployee extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        jLabel10.setText("Employee Management");
+        lblEmpMng.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        lblEmpMng.setText("Employee Management");
 
         history.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/historyOke.png"))); // NOI18N
         history.setBorder(null);
@@ -189,6 +208,19 @@ public class JHomeEmployee extends javax.swing.JFrame {
         lblUser.setText("id_user");
         lblUser.setEnabled(false);
 
+        lblManager.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        lblManager.setText("Leave Management (Manager)");
+
+        buttonManager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/people-icon.png"))); // NOI18N
+        buttonManager.setBorder(null);
+        buttonManager.setBorderPainted(false);
+        buttonManager.setContentAreaFilled(false);
+        buttonManager.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonManagerActionPerformed(evt);
+            }
+        });
+
         jLHome.setLayer(jPanel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLHome.setLayer(jPanel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLHome.setLayer(FormRequest, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -200,9 +232,11 @@ public class JHomeEmployee extends javax.swing.JFrame {
         jLHome.setLayer(lblGreeting, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLHome.setLayer(jPanel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLHome.setLayer(uploadPhoto, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLHome.setLayer(jLabel10, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLHome.setLayer(lblEmpMng, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLHome.setLayer(history, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLHome.setLayer(lblUser, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLHome.setLayer(lblManager, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLHome.setLayer(buttonManager, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLHomeLayout = new javax.swing.GroupLayout(jLHome);
         jLHome.setLayout(jLHomeLayout);
@@ -214,32 +248,38 @@ public class JHomeEmployee extends javax.swing.JFrame {
                 .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(FormRequest)
                     .addComponent(jLabel1))
-                .addGap(113, 113, 113)
+                .addGap(124, 124, 124)
                 .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel6)
-                    .addComponent(information)
-                    .addComponent(buttonEmp)
-                    .addComponent(jLabel10))
+                    .addComponent(information))
+                .addGap(141, 141, 141)
                 .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jLHomeLayout.createSequentialGroup()
-                        .addGap(196, 196, 196)
-                        .addComponent(jLabel5)
-                        .addContainerGap())
-                    .addGroup(jLHomeLayout.createSequentialGroup()
-                        .addGap(127, 127, 127)
-                        .addComponent(history)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(69, 69, 69)
+                        .addComponent(jLabel5))
+                    .addComponent(history))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLHomeLayout.createSequentialGroup()
                         .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLHomeLayout.createSequentialGroup()
-                                .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(uploadPhoto)
-                                    .addComponent(lblGreeting, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(79, 79, 79))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLHomeLayout.createSequentialGroup()
-                                .addComponent(lblUser)
-                                .addGap(145, 145, 145))))))
+                            .addComponent(uploadPhoto)
+                            .addComponent(lblGreeting, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(79, 79, 79))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLHomeLayout.createSequentialGroup()
+                        .addComponent(lblUser)
+                        .addGap(145, 145, 145))))
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jLHomeLayout.createSequentialGroup()
+                .addGap(210, 210, 210)
+                .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(buttonEmp)
+                    .addComponent(lblEmpMng))
+                .addGap(170, 170, 170)
+                .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(buttonManager)
+                    .addComponent(lblManager))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jLHomeLayout.setVerticalGroup(
             jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,20 +303,26 @@ public class JHomeEmployee extends javax.swing.JFrame {
                         .addGap(13, 13, 13)
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(101, 101, 101)
-                        .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jLHomeLayout.createSequentialGroup()
-                                .addComponent(history)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel5))
+                        .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jLHomeLayout.createSequentialGroup()
                                 .addComponent(information)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel6)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
-                .addComponent(buttonEmp)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel10)
-                .addGap(72, 72, 72)
+                                .addComponent(jLabel6))
+                            .addGroup(jLHomeLayout.createSequentialGroup()
+                                .addComponent(history)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel5)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLHomeLayout.createSequentialGroup()
+                        .addComponent(buttonEmp)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblEmpMng))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLHomeLayout.createSequentialGroup()
+                        .addComponent(buttonManager)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblManager)))
+                .addGap(64, 64, 64)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(68, 68, 68))
         );
@@ -301,15 +347,27 @@ public class JHomeEmployee extends javax.swing.JFrame {
 
     private void FormRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FormRequestActionPerformed
         String id = lblUser.getText();
-        String username = lblGreeting.getText();
-        System.out.println(id);
-        JIRequestForm jIRequestForm = new JIRequestForm(id, username);
+        Employee employee = iac.getById(id);
+        String name = employee.getFirstName()+" "+employee.getLastName();
+        String email = employee.getEmail();
+        String phoneNumber = String.valueOf("0" + employee.getPhoneNumber());
+        JIRequestForm jIRequestForm = new JIRequestForm(phoneNumber, id, name);
         this.jLHome.add(jIRequestForm);
         jIRequestForm.show();
     }//GEN-LAST:event_FormRequestActionPerformed
 
     private void informationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_informationActionPerformed
-        JIInformation jIInformation = new JIInformation();
+        String ide = lblUser.getText();
+        Employee employee = iac.getById(ide);
+        Job jobs = ijc.getById("1");
+        String id = String.valueOf(employee.getId());
+        String firstName = employee.getFirstName();
+        String lastName = employee.getLastName();
+        String email = employee.getEmail();
+        String phoneNumber = String.valueOf("0" + employee.getPhoneNumber());
+        String manager = String.valueOf(employee.getManager().getFirstName() + " " + employee.getManager().getLastName());
+        String job = jobs.getName();
+        JIInformation jIInformation = new JIInformation(id, firstName, lastName, email, phoneNumber, manager, job);
         this.jLHome.add(jIInformation);
         jIInformation.show();
     }//GEN-LAST:event_informationActionPerformed
@@ -327,10 +385,30 @@ public class JHomeEmployee extends javax.swing.JFrame {
     }//GEN-LAST:event_uploadPhotoActionPerformed
 
     private void historyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historyActionPerformed
-        JIHistory jIHistory = new JIHistory();
+        LeaveRequest leaveRequest = ilrc.getById("1");
+        LeaveRequestStatus leaveRequestStatus = ilrsc.getById("1");
+        String id = String.valueOf(leaveRequest.getId());
+        String from = String.valueOf(leaveRequest.getStartDate());
+        String to = String.valueOf(leaveRequest.getEndDate());
+        String notes = leaveRequest.getNotes();
+//        String type = leaveRequestStatus.getStatus();
+//        String status = leaveRequestStatus.getStatus().getName();
+        String ide = lblUser.getText();
+        Employee employee = iac.getById(ide);
+        String name = employee.getFirstName()+" "+employee.getLastName();
+        JIHistory jIHistory = new JIHistory(id, from, to, notes, name);
         this.jLHome.add(jIHistory);
         jIHistory.show();
     }//GEN-LAST:event_historyActionPerformed
+
+    private void buttonManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonManagerActionPerformed
+        String id = lblUser.getText();
+        Employee employee = iac.getById(id);
+        String name = employee.getFirstName()+" "+employee.getLastName();
+        JHomeManager jHomeManager = new JHomeManager(id, name);
+        jHomeManager.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_buttonManagerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -370,11 +448,11 @@ public class JHomeEmployee extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton FormRequest;
     private javax.swing.JButton buttonEmp;
+    private javax.swing.JButton buttonManager;
     private javax.swing.JButton history;
     private javax.swing.JButton information;
     private javax.swing.JLayeredPane jLHome;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -383,7 +461,9 @@ public class JHomeEmployee extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JLabel lblEmpMng;
     private javax.swing.JLabel lblGreeting;
+    private javax.swing.JLabel lblManager;
     private javax.swing.JLabel lblUser;
     private javax.swing.JButton uploadPhoto;
     // End of variables declaration//GEN-END:variables
