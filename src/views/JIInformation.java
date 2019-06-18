@@ -19,8 +19,6 @@ public class JIInformation extends javax.swing.JInternalFrame {
 
     SessionFactory factory = HibernateUtil.getSessionFactory();
 
-//    GeneralDAO<LeaveRequest> dAO = new GeneralDAO<>(factory, LeaveRequest.class);
-
     /**
      * Creates new form JIInformation
      */

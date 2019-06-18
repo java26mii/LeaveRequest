@@ -409,18 +409,7 @@ public class JHomeEmployee extends javax.swing.JFrame {
     }//GEN-LAST:event_uploadPhotoActionPerformed
 
     private void historyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historyActionPerformed
-        LeaveRequest leaveRequest = ilrc.getById("1");
-        LeaveRequestStatus leaveRequestStatus = ilrsc.getById("1");
-        String id = String.valueOf(leaveRequest.getId());
-        String from = String.valueOf(leaveRequest.getStartDate());
-        String to = String.valueOf(leaveRequest.getEndDate());
-        String notes = leaveRequest.getNotes();
-//        String type = leaveRequestStatus.getStatus();
-//        String status = leaveRequestStatus.getStatus().getName();
-        String ide = lblUser.getText();
-        Employee employee = iac.getById(ide);
-        String name = employee.getFirstName()+" "+employee.getLastName();
-        JIHistory jIHistory = new JIHistory(id, from, to, notes, name);
+        JIHistory jIHistory = new JIHistory();
         this.jLHome.add(jIHistory);
         jIHistory.show();
     }//GEN-LAST:event_historyActionPerformed
