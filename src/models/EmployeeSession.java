@@ -7,10 +7,10 @@ package models;
 
 /**
  *
- * @author ACER
+ * @author KHAIRUL MUNA
  */
 public class EmployeeSession {
-    
+
     public static String idEmp;
     public static String nameEmp;
 
@@ -20,6 +20,7 @@ public class EmployeeSession {
     public EmployeeSession(String idEmp, String nameEmp) {
         this.idEmp = idEmp;
         this.nameEmp = nameEmp;
+
     }
 
     public static String getIdEmp() {
@@ -36,6 +37,6 @@ public class EmployeeSession {
 
     public static void setNameEmp(String nameEmp) {
         EmployeeSession.nameEmp = nameEmp;
-    }   
-    
+    }
+
 }

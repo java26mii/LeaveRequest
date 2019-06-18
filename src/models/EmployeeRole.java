@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Arif Fridasari
+ * @author KHAIRUL MUNA
  */
 @Entity
 @Table(name = "EMPLOYEE_ROLES")
@@ -50,7 +50,8 @@ public class EmployeeRole implements Serializable {
         this.employee = employee;
         this.role = role;
     }
-
+    
+   
     public EmployeeRole(Long id) {
         this.id = id;
     }
@@ -103,5 +104,5 @@ public class EmployeeRole implements Serializable {
     public String toString() {
         return "models.EmployeeRole[ id=" + id + " ]";
     }
-
+    
 }

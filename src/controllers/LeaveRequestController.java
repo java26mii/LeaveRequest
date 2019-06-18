@@ -10,6 +10,7 @@ import icontrollers.ILeaveRequestController;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import models.Employee;
 import models.LeaveRequest;
 import models.LeaveType;
 import org.hibernate.SessionFactory;
@@ -20,10 +21,9 @@ import org.hibernate.SessionFactory;
  */
 public class LeaveRequestController implements ILeaveRequestController {
 
-    Date date = new Date();
-    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-    
     private GeneralDAO<LeaveRequest> gdao;
+    Date date = new Date(); // this object contains the current date value 
+    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 
     public LeaveRequestController(SessionFactory factory) {
         gdao = new GeneralDAO(factory, LeaveRequest.class);
@@ -45,17 +45,33 @@ public class LeaveRequestController implements ILeaveRequestController {
     }
 
     @Override
-    public String save(String id, String startDate, String endDate, String type, String notes, String requester, String manager, String status) {
-        String result = "";
-//        LeaveRequest leaveRequest = new LeaveRequest(new Long(id), date, date, new LeaveType(new Long(type)) , detail, requester, 0, status) ;
-//        if (gdao.saveOrDelete(leaveRequest, false)) {
-//            result = "Success";
-//        } else {
-//            result = "Failed";
-//        }
+    public String save(String id, String startDate, String endDate, String notes, String requester, String type) {
+        String result = "Failed";
+        try {
+            if (gdao.saveOrDelete(new LeaveRequest(new Long (id), new java.sql.Date(formatter.parse(startDate).getTime()), new java.sql.Date(formatter.parse(endDate).getTime()), notes, new Employee(new Long (requester)) , new LeaveType(new Long (type)), new Character('0')), false)) {
+                result = "Success";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return result;
     }
+    
+    @Override
+    public String saveLr(String startDate, String endDate, String notes, String requester, String type) {
+        String result = "Failed";
+        try {
+            if (gdao.saveOrDelete(new LeaveRequest(new java.sql.Date(formatter.parse(startDate).getTime()), new java.sql.Date(formatter.parse(endDate).getTime()), notes, new Employee(new Long (requester)) , new LeaveType(new Long (type)), new Character('0')), false)) {
+                result = "Success";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        return result;
+    }
+    
     @Override
     public String delete(String id) {
         String result = "";

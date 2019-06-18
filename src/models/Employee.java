@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Arif Fridasari
+ * @author KHAIRUL MUNA
  */
 @Entity
 @Table(name = "EMPLOYEES")
@@ -62,8 +62,6 @@ public class Employee implements Serializable {
     private Character isDelete;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "requester", fetch = FetchType.LAZY)
     private List<LeaveRequest> leaveRequestList;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "employee", fetch = FetchType.LAZY)
-    private LeaveRequest leaveRequest;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee", fetch = FetchType.LAZY)
     private List<EmployeeJob> employeeJobList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "manager", fetch = FetchType.LAZY)
@@ -81,22 +79,8 @@ public class Employee implements Serializable {
     public Employee() {
     }
 
-    public Employee(Long id, String firstName, String lastName, String email, long phoneNumber, Employee manager) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.manager = manager;
-    }
-
     public Employee(Long id) {
         this.id = id;
-    }
-
-    public Employee(Long id, String email) {
-        this.id = id;
-        this.email = email;
     }
 
     public Employee(Long id, String firstName, String lastName, String email, long phoneNumber, Employee manager, Character isDelete) {
@@ -106,6 +90,16 @@ public class Employee implements Serializable {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.manager = manager;
+        this.isDelete = isDelete;
+    }
+    
+
+    public Employee(Long id, String firstName, String lastName, String email, long phoneNumber, Character isDelete) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
         this.isDelete = isDelete;
     }
 
@@ -164,14 +158,6 @@ public class Employee implements Serializable {
 
     public void setLeaveRequestList(List<LeaveRequest> leaveRequestList) {
         this.leaveRequestList = leaveRequestList;
-    }
-
-    public LeaveRequest getLeaveRequest() {
-        return leaveRequest;
-    }
-
-    public void setLeaveRequest(LeaveRequest leaveRequest) {
-        this.leaveRequest = leaveRequest;
     }
 
     @XmlTransient
@@ -249,5 +235,5 @@ public class Employee implements Serializable {
     public String toString() {
         return "models.Employee[ id=" + id + " ]";
     }
-
+    
 }

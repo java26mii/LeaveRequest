@@ -20,8 +20,9 @@ public interface ILeaveRequestController {
 
     public List<LeaveRequest> search(Object keyword);
 
-    public String save(String id, String startDate, String endDate, String type, String notes, 
-            String requester, String manager, String status);
+    public String save(String id, String startDate, String endDate, String notes, String requester, String type);
+
+    public String saveLr(String startDate, String endDate, String notes, String requester, String type);
 
     public String delete(String id);
 }

@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Arif Fridasari
+ * @author KHAIRUL MUNA
  */
 @Entity
 @Table(name = "ANNUAL_LEAVES")
@@ -49,15 +49,15 @@ public class AnnualLeave implements Serializable {
     public AnnualLeave() {
     }
 
-    public AnnualLeave(Long id, Short remain) {
-        this.id = id;
-        this.remain = remain;
-    }
-
     public AnnualLeave(Long id) {
         this.id = id;
     }
 
+    public AnnualLeave(Long id, Short remain) {
+        this.id = id;
+        this.remain = remain;
+    }
+    
     public AnnualLeave(Long id, Character isDelete) {
         this.id = id;
         this.isDelete = isDelete;
@@ -119,5 +119,5 @@ public class AnnualLeave implements Serializable {
     public String toString() {
         return "models.AnnualLeave[ id=" + id + " ]";
     }
-
+    
 }

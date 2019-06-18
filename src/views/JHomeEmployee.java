@@ -336,7 +336,7 @@ public class JHomeEmployee extends javax.swing.JFrame {
                                 .addComponent(history)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel5)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
                 .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLHomeLayout.createSequentialGroup()
                         .addComponent(buttonEmp)
@@ -370,12 +370,7 @@ public class JHomeEmployee extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void FormRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FormRequestActionPerformed
-        String id = lblUser.getText();
-        Employee employee = iac.getById(id);
-        String name = employee.getFirstName()+" "+employee.getLastName();
-        String email = employee.getEmail();
-        String phoneNumber = String.valueOf("0" + employee.getPhoneNumber());
-        JIRequestForm jIRequestForm = new JIRequestForm(phoneNumber, id, name);
+        JIRequestForm jIRequestForm = new JIRequestForm();
         this.jLHome.add(jIRequestForm);
         jIRequestForm.show();
     }//GEN-LAST:event_FormRequestActionPerformed

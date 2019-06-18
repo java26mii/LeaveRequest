@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Arif Fridasari
+ * @author KHAIRUL MUNA
  */
 @Entity
 @Table(name = "JOBS")
@@ -51,13 +51,14 @@ public class Job implements Serializable {
     public Job() {
     }
 
-    public Job(Long id) {
-        this.id = id;
-    }
-
     public Job(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+    
+
+    public Job(Long id) {
+        this.id = id;
     }
 
     public Job(Long id, String name, Character isDelete) {
@@ -123,5 +124,5 @@ public class Job implements Serializable {
     public String toString() {
         return "models.Job[ id=" + id + " ]";
     }
-
+    
 }

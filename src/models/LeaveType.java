@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Arif Fridasari
+ * @author KHAIRUL MUNA
  */
 @Entity
 @Table(name = "LEAVE_TYPES")
@@ -123,5 +123,5 @@ public class LeaveType implements Serializable {
     public String toString() {
         return "models.LeaveType[ id=" + id + " ]";
     }
-
+    
 }

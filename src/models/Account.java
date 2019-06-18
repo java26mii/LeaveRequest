@@ -7,7 +7,6 @@ package models;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ACER
+ * @author KHAIRUL MUNA
  */
 @Entity
 @Table(name = "ACCOUNTS")
@@ -53,7 +52,7 @@ public class Account implements Serializable {
     @Column(name = "IMAGE")
     private Serializable image;
     @JoinColumn(name = "ID", referencedColumnName = "ID", insertable = false, updatable = false)
-    @OneToOne()
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Employee employee;
 
     public Account() {
@@ -61,12 +60,6 @@ public class Account implements Serializable {
 
     public Account(Long id) {
         this.id = id;
-    }
-
-    public Account(Long id, String username, String password) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
     }
 
     public Account(Long id, String username, String password, Character isDelete) {
@@ -108,18 +101,20 @@ public class Account implements Serializable {
         this.isDelete = isDelete;
     }
 
+    public Serializable getImage() {
+        return image;
+    }
+
+    public void setImage(Serializable image) {
+        this.image = image;
+    }
+
     public Employee getEmployee() {
         return employee;
     }
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
-        if (null != employee) {
-            this.employee = employee;
-
-        } else {
-            this.employee = null;
-        }
     }
 
     @Override

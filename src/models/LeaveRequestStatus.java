@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Arif Fridasari
+ * @author KHAIRUL MUNA
  */
 @Entity
 @Table(name = "LEAVE_REQUEST_STATUS")
@@ -59,6 +59,7 @@ public class LeaveRequestStatus implements Serializable {
         this.leaveRequest = leaveRequest;
         this.status = status;
     }
+    
 
     public LeaveRequestStatus(Long id) {
         this.id = id;
@@ -125,5 +126,5 @@ public class LeaveRequestStatus implements Serializable {
     public String toString() {
         return "models.LeaveRequestStatus[ id=" + id + " ]";
     }
-
+    
 }

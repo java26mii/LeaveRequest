@@ -10,12 +10,14 @@ import controllers.AnnualLeaveController;
 import controllers.EmployeeController;
 import controllers.EmployeeRoleController;
 import controllers.JobController;
+import controllers.LeaveRequestController;
 import controllers.RoleController;
 import daos.GeneralDAO;
 import icontrollers.IAccountController;
 import icontrollers.IEmployeeController;
 import icontrollers.IEmployeeRoleController;
 import icontrollers.IJobController;
+import icontrollers.ILeaveRequestController;
 import icontrollers.IRoleController;
 import models.Account;
 import models.AnnualLeave;
@@ -39,20 +41,24 @@ public class OLeaveRequest {
 
         GeneralDAO<Account> dDao = new GeneralDAO(factory, Account.class);
         AnnualLeaveController dc = new AnnualLeaveController(factory);
+
+        ILeaveRequestController ilrc = new LeaveRequestController(factory);
+
+//        System.out.println(ilrc.save("2","08/08/2019", "08/09/2019", "a", "100", "1"));
 //        for (AnnualLeave annualLeave : dDao.getData("")) {
 //            System.out.println(annualLeave.getId());
 //            System.out.println(annualLeave.getRemain());
 //        }
-        
+
         //System.out.println(dDao.getEmployee("sindiyuliawibowo31@gmail.com"));
 //        IEmployeeController iec = new EmployeeController(factory);
 //        System.out.println(iec.save("150", "coba", "coba", "mail", "100", "100"));
-        IAccountController iac = new AccountController(factory);
+//        IAccountController iac = new AccountController(factory);
 //        Account account = iac.getById("100");
 //        System.out.println(iac.save("100", "arif", "123"));
 //        String email = "usup@mail.com";
 //        System.out.println(email.contains("@"));
-          //System.out.println(iac.login("gmail.com", "yulia123"));
+        //System.out.println(iac.login("gmail.com", "yulia123"));
 //          Account account = dDao.getAccount("sindi123");
 //          if (account != null) {
 //              System.out.println("berisi");
@@ -70,8 +76,8 @@ public class OLeaveRequest {
         for (EmployeeRole employeeRole : iec.search("110")) {
             System.out.println(employeeRole.getRole().getName());
         }
-        
+
         factory.close();
-        
+
     }
 }

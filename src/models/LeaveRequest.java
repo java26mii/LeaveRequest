@@ -13,13 +13,15 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -64,9 +66,6 @@ public class LeaveRequest implements Serializable {
     @JoinColumn(name = "REQUESTER", referencedColumnName = "ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Employee requester;
-    @JoinColumn(name = "ID", referencedColumnName = "ID", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
-    private Employee employee;
     @JoinColumn(name = "TYPE", referencedColumnName = "ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private LeaveType type;
@@ -80,12 +79,23 @@ public class LeaveRequest implements Serializable {
         this.id = id;
     }
 
-    public LeaveRequest(Long id, Date startDate, Date endDate, String notes, Character isDelete) {
+    public LeaveRequest(Long id, Date startDate, Date endDate, String notes, Employee requester, LeaveType type, Character isDelete) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.notes = notes;
         this.isDelete = isDelete;
+        this.requester = requester;
+        this.type = type;
+    }
+
+    public LeaveRequest(Date startDate, Date endDate, String notes, Employee requester, LeaveType type, Character isDelete) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.notes = notes;
+        this.isDelete = isDelete;
+        this.requester = requester;
+        this.type = type;
     }
 
     public Long getId() {
@@ -136,14 +146,6 @@ public class LeaveRequest implements Serializable {
         this.requester = requester;
     }
 
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
     public LeaveType getType() {
         return type;
     }
@@ -185,5 +187,5 @@ public class LeaveRequest implements Serializable {
     public String toString() {
         return "models.LeaveRequest[ id=" + id + " ]";
     }
-    
+
 }
