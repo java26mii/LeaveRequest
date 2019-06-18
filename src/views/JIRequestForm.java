@@ -53,7 +53,6 @@ public class JIRequestForm extends javax.swing.JInternalFrame {
      */
     public JIRequestForm() {
         initComponents();
-//        txtLRid.setText(id);
         lblGreeting.setText(name);
         txtManager.setText(String.valueOf(employee.getManager().getFirstName() + " " + employee.getManager().getLastName()));
         txtPhoneNumber.setText("0" + String.valueOf(employee.getPhoneNumber()));

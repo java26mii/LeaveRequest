@@ -5,8 +5,14 @@
  */
 package views;
 
-import controllers.LeaveRequestController;
+import controllers.EmployeeController;
 import daos.GeneralDAO;
+import icontrollers.IEmployeeController;
+import java.util.ArrayList;
+import java.util.List;
+import models.Employee;
+import models.EmployeeSession;
+import models.Job;
 import models.LeaveRequest;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
@@ -18,22 +24,46 @@ import tools.HibernateUtil;
 public class JIInformation extends javax.swing.JInternalFrame {
 
     SessionFactory factory = HibernateUtil.getSessionFactory();
+    IEmployeeController iac = new EmployeeController(factory);
+    EmployeeSession employeeSession = new EmployeeSession();
+    String id = employeeSession.getIdEmp();
+    String name = employeeSession.getNameEmp();
+    
+    Employee employee = iac.getById(id);
+            
+//    String ide = lblUser.getText();
+//    Employee employee = iac.getById(ide);
+//    List<Job> jobs = new ArrayList();
+//    jobs  = ijc.search(ide);
+//    String jobName = "";
+//    for (Job job : jobs
+//
+//    
+//        ) {
+//            jobName = job.getName();
+//    }
+//    String id = String.valueOf(employee.getId());
+//    String firstName = employee.getFirstName();
+//    String lastName = employee.getLastName();
+//    String email = employee.getEmail();
+//    String phoneNumber = String.valueOf("0" + employee.getPhoneNumber());
+//    String manager = String.valueOf(employee.getManager().getFirstName() + " " + employee.getManager().getLastName());
+//    String job = jobName;
 
     /**
      * Creates new form JIInformation
      */
-    public JIInformation(String id, String firstName, String lastName, String email, String phoneNumber, String manager,String job) {
+    public JIInformation() {
         initComponents();
-        lblGreeting.setText("Hai "+firstName+" "+lastName+" !");
+        lblGreeting.setText("Hai "+name+" !");
         txtId.setText(id);
-        txtName.setText(firstName);
-        txtLastName.setText(lastName);
-        txtLastName.setText(lastName);
-        txtEmail.setText(email);
-        txtPhone.setText(phoneNumber);
-        txtManager.setText(manager);
-        txtJob.setText(job);
-        
+        txtName.setText(employee.getFirstName());
+        txtLastName.setText(employee.getLastName());
+        txtEmail.setText(employee.getEmail());
+        txtPhone.setText("0"+employee.getPhoneNumber());
+        txtManager.setText(employee.getManager().getFirstName()+ " "+ employee.getManager().getLastName() );
+//        txtJob.setText();
+
 //        information();
     }
 
@@ -58,7 +88,6 @@ public class JIInformation extends javax.swing.JInternalFrame {
         lblGreeting = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -71,17 +100,12 @@ public class JIInformation extends javax.swing.JInternalFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
         txtId = new javax.swing.JLabel();
         txtName = new javax.swing.JLabel();
         txtLastName = new javax.swing.JLabel();
         txtEmail = new javax.swing.JLabel();
         txtPhone = new javax.swing.JLabel();
         txtManager = new javax.swing.JLabel();
-        txtAvailable = new javax.swing.JLabel();
-        txtJob = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
 
         setClosable(true);
@@ -140,9 +164,6 @@ public class JIInformation extends javax.swing.JInternalFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("Manager");
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel10.setText("Available Leave");
-
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel1.setText("Requester Information");
 
@@ -179,9 +200,6 @@ public class JIInformation extends javax.swing.JInternalFrame {
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel20.setText(":");
 
-        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel21.setText(":");
-
         txtId.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtId.setText("ID");
 
@@ -200,22 +218,14 @@ public class JIInformation extends javax.swing.JInternalFrame {
         txtManager.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtManager.setText("name");
 
-        txtAvailable.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtAvailable.setText("5");
-
-        txtJob.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtJob.setText("name");
-
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel11.setText("Job");
-
-        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel22.setText(":");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(99, 99, 99)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,39 +233,26 @@ public class JIInformation extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5)
                     .addComponent(jLabel6)
                     .addComponent(jLabel8)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel22)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtJob))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtName)
-                            .addComponent(txtLastName)
-                            .addComponent(txtEmail)
-                            .addComponent(txtPhone)
-                            .addComponent(txtManager)
-                            .addComponent(txtAvailable)
-                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtManager)
+                    .addComponent(txtName)
+                    .addComponent(txtLastName)
+                    .addComponent(txtEmail)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPhone))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,25 +294,11 @@ public class JIInformation extends javax.swing.JInternalFrame {
                         .addComponent(jLabel8)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel22)
-                        .addComponent(txtJob))
-                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtManager)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtAvailable))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel20)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel21))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel10)))
-                .addContainerGap(124, Short.MAX_VALUE))
+                        .addComponent(txtManager))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap(187, Short.MAX_VALUE))
         );
 
         jPanel7.setBackground(new java.awt.Color(153, 0, 0));
@@ -376,8 +359,6 @@ public class JIInformation extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -386,8 +367,6 @@ public class JIInformation extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -400,10 +379,8 @@ public class JIInformation extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JLabel lblGreeting;
-    private javax.swing.JLabel txtAvailable;
     private javax.swing.JLabel txtEmail;
     private javax.swing.JLabel txtId;
-    private javax.swing.JLabel txtJob;
     private javax.swing.JLabel txtLastName;
     private javax.swing.JLabel txtManager;
     private javax.swing.JLabel txtName;

@@ -43,24 +43,20 @@ public class JIHistory extends javax.swing.JInternalFrame {
         initComponents();
         lblGreeting.setText("Hai " + name + " !");
         showTableDepartment("");
+        System.out.println(id);
     }
 
     public void showTableDepartment(String key) {
         DefaultTableModel model = (DefaultTableModel) tblInformation.getModel();
         model.setRowCount(0);
         Object[] row = new Object[4];
-        List<LeaveRequest> leaveRequests = new ArrayList<>();
+        int i = 1;
         for (LeaveRequest leaveRequest : ilrc.search(id)) {
-            if (key == "") {
-                leaveRequests = ilrc.getAll();
-            }
-            for (int i = 0; i < leaveRequests.size(); i++) {
-                row[0] = i + 1;
-                row[1] = leaveRequests.get(i).getId();
-                row[2] = formatter.format(leaveRequests.get(i).getStartDate());
-                row[3] = formatter.format(leaveRequests.get(i).getEndDate());
-                model.addRow(row);
-            }
+            row[0] = i++;
+            row[1] = leaveRequest.getId();
+            row[2] = formatter.format(leaveRequest.getStartDate());
+            row[3] = formatter.format(leaveRequest.getEndDate());
+            model.addRow(row);
 
         }
     }
@@ -84,6 +80,7 @@ public class JIHistory extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblInformation = new javax.swing.JTable();
+        jpDetail = new javax.swing.JPanel();
 
         setClosable(true);
         setMaximizable(true);
@@ -139,21 +136,36 @@ public class JIHistory extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tblInformation);
 
+        javax.swing.GroupLayout jpDetailLayout = new javax.swing.GroupLayout(jpDetail);
+        jpDetail.setLayout(jpDetailLayout);
+        jpDetailLayout.setHorizontalGroup(
+            jpDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jpDetailLayout.setVerticalGroup(
+            jpDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 353, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 758, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 811, Short.MAX_VALUE)
+                    .addComponent(jpDetail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(308, Short.MAX_VALUE))
+                .addGap(34, 34, 34)
+                .addComponent(jpDetail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -183,7 +195,7 @@ public class JIHistory extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 347, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,7 +233,7 @@ public class JIHistory extends javax.swing.JInternalFrame {
                         .addComponent(jLabel13)
                         .addGap(18, 18, 18)
                         .addComponent(lblGreeting)))
-                .addContainerGap(227, Short.MAX_VALUE))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
 
         pack();
@@ -229,12 +241,11 @@ public class JIHistory extends javax.swing.JInternalFrame {
 
     private void tblInformationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblInformationMouseClicked
         DefaultTableModel model = (DefaultTableModel) tblInformation.getModel();
-        int SelectRowIndex = tblInformation.getSelectedRow();
         showTableDepartment(id);
-//        txtDepartment_Id.setText(model.getValueAt(SelectRowIndex, 1).toString());
-//        txtDepartment_Name.setText(model.getValueAt(SelectRowIndex, 2).toString());
-//        cmbManager.setSelectedItem(model.getValueAt(SelectRowIndex, 3).toString());
-//        cmbLocation.setSelectedItem(model.getValueAt(SelectRowIndex, 4).toString()); 
+        tblInformation.getSelectedRows();
+        JIRequestHistoryDetail jirhd = new JIRequestHistoryDetail();
+        this.jpDetail.add(jirhd);
+        jirhd.show();
     }//GEN-LAST:event_tblInformationMouseClicked
 
 
@@ -247,6 +258,7 @@ public class JIHistory extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jpDetail;
     private javax.swing.JLabel lblGreeting;
     private javax.swing.JTable tblInformation;
     // End of variables declaration//GEN-END:variables

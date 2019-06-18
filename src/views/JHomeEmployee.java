@@ -376,22 +376,7 @@ public class JHomeEmployee extends javax.swing.JFrame {
     }//GEN-LAST:event_FormRequestActionPerformed
 
     private void informationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_informationActionPerformed
-        String ide = lblUser.getText();
-        Employee employee = iac.getById(ide);
-        List<Job> jobs = new ArrayList();
-        jobs = ijc.search(ide);
-        String jobName = "";
-        for (Job job : jobs) {
-            jobName = job.getName();
-        }
-        String id = String.valueOf(employee.getId());
-        String firstName = employee.getFirstName();
-        String lastName = employee.getLastName();
-        String email = employee.getEmail();
-        String phoneNumber = String.valueOf("0" + employee.getPhoneNumber());
-        String manager = String.valueOf(employee.getManager().getFirstName() + " " + employee.getManager().getLastName());
-        String job = jobName;
-        JIInformation jIInformation = new JIInformation(id, firstName, lastName, email, phoneNumber, manager, job);
+        JIInformation jIInformation = new JIInformation();
         this.jLHome.add(jIInformation);
         jIInformation.show();
     }//GEN-LAST:event_informationActionPerformed
