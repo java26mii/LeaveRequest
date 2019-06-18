@@ -8,11 +8,20 @@ package tools;
 import controllers.AccountController;
 import controllers.AnnualLeaveController;
 import controllers.EmployeeController;
+import controllers.EmployeeRoleController;
+import controllers.JobController;
+import controllers.RoleController;
 import daos.GeneralDAO;
 import icontrollers.IAccountController;
 import icontrollers.IEmployeeController;
+import icontrollers.IEmployeeRoleController;
+import icontrollers.IJobController;
+import icontrollers.IRoleController;
 import models.Account;
 import models.AnnualLeave;
+import models.EmployeeRole;
+import models.Job;
+import models.Role;
 import org.hibernate.SessionFactory;
 
 /**
@@ -43,7 +52,7 @@ public class OLeaveRequest {
 //        System.out.println(iac.save("100", "arif", "123"));
 //        String email = "usup@mail.com";
 //        System.out.println(email.contains("@"));
-          System.out.println(iac.login("gmail.com", "yulia123"));
+          //System.out.println(iac.login("gmail.com", "yulia123"));
 //          Account account = dDao.getAccount("sindi123");
 //          if (account != null) {
 //              System.out.println("berisi");
@@ -51,5 +60,18 @@ public class OLeaveRequest {
 //              System.out.println("kosong");
 //          }
         //System.out.println(iac.save("130", "usup", "usup123"));
+        IJobController ijc = new JobController(factory);
+//        for (Job job : ijc.search("110")) {
+//            job.getName();
+//        }
+        IEmployeeRoleController iec = new EmployeeRoleController(factory);
+        IRoleController irc = new RoleController(factory);
+        String idRole = "";
+        for (EmployeeRole employeeRole : iec.search("110")) {
+            System.out.println(employeeRole.getRole().getName());
+        }
+        
+        factory.close();
+        
     }
 }

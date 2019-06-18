@@ -6,17 +6,20 @@
 package views;
 
 import controllers.EmployeeController;
+import controllers.EmployeeRoleController;
 import controllers.JobController;
 import controllers.LeaveRequestController;
 import controllers.LeaveRequestStatusController;
+import controllers.RoleController;
 import icontrollers.IEmployeeController;
+import icontrollers.IEmployeeRoleController;
 import icontrollers.IJobController;
 import icontrollers.ILeaveRequestController;
 import icontrollers.ILeaveRequestStatusController;
-import models.Employee;
-import models.Job;
-import models.LeaveRequest;
-import models.LeaveRequestStatus;
+import icontrollers.IRoleController;
+import java.util.ArrayList;
+import java.util.List;
+import models.*;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
 
@@ -30,16 +33,35 @@ public class JHomeEmployee extends javax.swing.JFrame {
     IJobController ijc = new JobController(factory);
     ILeaveRequestController ilrc = new LeaveRequestController(factory);
     ILeaveRequestStatusController ilrsc = new LeaveRequestStatusController(factory);
+    IEmployeeRoleController ierc = new EmployeeRoleController(factory);
+    IRoleController irc = new RoleController(factory);
     
     public JHomeEmployee(String id, String username) {
         initComponents();
+        String idRole = "";
+        String role = "";
+        for (EmployeeRole employeeRole : ierc.search(id)) {
+            role = employeeRole.getRole().getName();
+        }
+         
         lblGreeting.setText("Hai, "+username+" !");
         lblUser.setText(id);
         lblUser.setVisible(false);
-        buttonEmp.setVisible(false);
-        lblEmpMng.setVisible(false);
-        buttonManager.setVisible(false);
-        lblManager.setVisible(false);
+        
+        boolean admin = false;
+        boolean manager = false;
+        if (role.equals("Admin")) {
+            admin = true;
+            manager = false;
+        }else if(role.equals("Manager")){
+            manager = true;
+            admin = false;
+        }
+        
+        buttonEmp.setVisible(admin);
+        lblEmpMng.setVisible(admin);
+        buttonManager.setVisible(manager);
+        lblManager.setVisible(manager);
     }
 
     /**
@@ -275,7 +297,7 @@ public class JHomeEmployee extends javax.swing.JFrame {
                 .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(buttonEmp)
                     .addComponent(lblEmpMng))
-                .addGap(170, 170, 170)
+                .addGap(140, 140, 140)
                 .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(buttonManager)
                     .addComponent(lblManager))
@@ -312,7 +334,7 @@ public class JHomeEmployee extends javax.swing.JFrame {
                                 .addComponent(history)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel5)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
                 .addGroup(jLHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLHomeLayout.createSequentialGroup()
                         .addComponent(buttonEmp)
@@ -324,7 +346,7 @@ public class JHomeEmployee extends javax.swing.JFrame {
                         .addComponent(lblManager)))
                 .addGap(64, 64, 64)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(68, 68, 68))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -359,14 +381,19 @@ public class JHomeEmployee extends javax.swing.JFrame {
     private void informationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_informationActionPerformed
         String ide = lblUser.getText();
         Employee employee = iac.getById(ide);
-        Job jobs = ijc.getById("1");
+        List<Job> jobs = new ArrayList();
+        jobs = ijc.search(ide);
+        String jobName = "";
+        for (Job job : jobs) {
+            jobName = job.getName();
+        }
         String id = String.valueOf(employee.getId());
         String firstName = employee.getFirstName();
         String lastName = employee.getLastName();
         String email = employee.getEmail();
         String phoneNumber = String.valueOf("0" + employee.getPhoneNumber());
         String manager = String.valueOf(employee.getManager().getFirstName() + " " + employee.getManager().getLastName());
-        String job = jobs.getName();
+        String job = jobName;
         JIInformation jIInformation = new JIInformation(id, firstName, lastName, email, phoneNumber, manager, job);
         this.jLHome.add(jIInformation);
         jIInformation.show();

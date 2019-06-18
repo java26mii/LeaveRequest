@@ -30,6 +30,7 @@ public class JLogin extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
+    
     public JLogin() {
         initComponents();
     }
