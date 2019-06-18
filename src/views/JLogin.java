@@ -13,6 +13,7 @@ import icontrollers.IEmployeeController;
 import javax.swing.JOptionPane;
 import models.Account;
 import models.Employee;
+import models.EmployeeSession;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
 
@@ -26,6 +27,7 @@ public class JLogin extends javax.swing.JFrame {
     GeneralDAO<Account> dAO = new GeneralDAO<>(factory, Account.class);
     IAccountController iac = new AccountController(factory);
     IEmployeeController iec = new EmployeeController(factory);
+    
 
     /**
      * Creates new form NewJFrame
@@ -199,8 +201,8 @@ public class JLogin extends javax.swing.JFrame {
                     
                 }
             }
-            
-            JHomeEmployee jHomeEmployee = new JHomeEmployee(id, user);
+            EmployeeSession emps = new EmployeeSession(id, user);
+            JHomeEmployee jHomeEmployee = new JHomeEmployee();
             jHomeEmployee.setVisible(true);
             this.dispose();
         } else {

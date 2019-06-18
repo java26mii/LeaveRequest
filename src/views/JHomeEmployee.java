@@ -36,16 +36,17 @@ public class JHomeEmployee extends javax.swing.JFrame {
     IEmployeeRoleController ierc = new EmployeeRoleController(factory);
     IRoleController irc = new RoleController(factory);
     
-    public JHomeEmployee(String id, String username) {
+    public JHomeEmployee() {
         initComponents();
+        EmployeeSession emps = new EmployeeSession();
         String idRole = "";
         String role = "";
-        for (EmployeeRole employeeRole : ierc.search(id)) {
+        for (EmployeeRole employeeRole : ierc.search(emps.getIdEmp())) {
             role = employeeRole.getRole().getName();
         }
          
-        lblGreeting.setText("Hai, "+username+" !");
-        lblUser.setText(id);
+        lblGreeting.setText("Hai, "+emps.getNameEmp()+" !");
+        lblUser.setText(emps.getIdEmp());
         lblUser.setVisible(false);
         
         boolean admin = false;
@@ -62,6 +63,7 @@ public class JHomeEmployee extends javax.swing.JFrame {
         lblEmpMng.setVisible(admin);
         buttonManager.setVisible(manager);
         lblManager.setVisible(manager);
+        
     }
 
     /**
@@ -467,7 +469,7 @@ public class JHomeEmployee extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JHomeEmployee("","").setVisible(true);
+                new JHomeEmployee().setVisible(true);
             }
         });
     }
