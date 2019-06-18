@@ -437,7 +437,7 @@ public class JIEmployee extends javax.swing.JInternalFrame {
     private void lblClickMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblClickMouseClicked
         String username = textFirstName.getText()+" "+textLastName.getText();
         String iduser = textEmpId.getText();
-        JIAccount jIAccount = new JIAccount(username, iduser);
+        JIAccount jIAccount = new JIAccount();
         this.jLayerEmp.add(jIAccount);
         jIAccount.show();
     }//GEN-LAST:event_lblClickMouseClicked

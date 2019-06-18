@@ -42,22 +42,20 @@
               <EmptySpace pref="109" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="textPassword" pref="236" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="buttonSave" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="buttonReset" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="buttonDelete" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="lblPassword" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblUsername" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="textUsername" alignment="0" max="32767" attributes="0"/>
-                      <Component id="lblEmpId" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="textEmpId" alignment="0" max="32767" attributes="0"/>
-                      <Component id="lblAccRole" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="comboBoxRole" alignment="0" pref="236" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="buttonSave" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="buttonReset" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="buttonDelete" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="lblPassword" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblUsername" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="textUsername" alignment="0" max="32767" attributes="0"/>
+                  <Component id="lblEmpId" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="textEmpId" alignment="0" max="32767" attributes="0"/>
+                  <Component id="lblAccRole" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="comboBoxRole" alignment="0" pref="236" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
           </Group>

@@ -19,6 +19,7 @@ import icontrollers.IJobController;
 import icontrollers.IRoleController;
 import models.Account;
 import models.AnnualLeave;
+import models.Employee;
 import models.EmployeeRole;
 import models.Job;
 import models.Role;
@@ -36,7 +37,7 @@ public class OLeaveRequest {
     public static void main(String[] args) {
         SessionFactory factory = HibernateUtil.getSessionFactory();
         System.out.println(factory);
-
+        
         GeneralDAO<Account> dDao = new GeneralDAO(factory, Account.class);
         AnnualLeaveController dc = new AnnualLeaveController(factory);
 //        for (AnnualLeave annualLeave : dDao.getData("")) {
@@ -64,12 +65,17 @@ public class OLeaveRequest {
 //        for (Job job : ijc.search("110")) {
 //            job.getName();
 //        }
-        IEmployeeRoleController iec = new EmployeeRoleController(factory);
+        IEmployeeRoleController ierc = new EmployeeRoleController(factory);
         IRoleController irc = new RoleController(factory);
+        IEmployeeController iec = new EmployeeController(factory);
         String idRole = "";
-        for (EmployeeRole employeeRole : iec.search("110")) {
+        
+        for (EmployeeRole employeeRole : ierc.search("110")) {
             System.out.println(employeeRole.getRole().getName());
         }
+        
+        Employee employee = iec.getById("110");
+        System.out.println(employee.getManager().getFirstName()+" "+employee.getManager().getLastName());
         
         factory.close();
         

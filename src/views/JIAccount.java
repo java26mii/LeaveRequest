@@ -7,9 +7,11 @@ package views;
 
 import controllers.AccountController;
 import controllers.EmployeeController;
+import controllers.EmployeeRoleController;
 import controllers.RoleController;
 import icontrollers.IAccountController;
 import icontrollers.IEmployeeController;
+import icontrollers.IEmployeeRoleController;
 import icontrollers.IRoleController;
 import java.util.Properties;
 import javax.mail.Message;
@@ -22,6 +24,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import models.Account;
 import models.Employee;
+import models.EmployeeRole;
+import models.EmployeeSession;
 import models.Role;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
@@ -35,14 +39,15 @@ public class JIAccount extends javax.swing.JInternalFrame {
     SessionFactory factory = HibernateUtil.getSessionFactory();
     IAccountController iac = new AccountController(factory);
     IEmployeeController iec = new EmployeeController(factory);
+    IEmployeeRoleController ierc = new EmployeeRoleController(factory);
     IRoleController irc = new RoleController(factory);
-
-    public JIAccount(String username, String idEmp) {
+    EmployeeSession es = new EmployeeSession();
+    
+    public JIAccount() {
         initComponents();
-        lblEmpName.setText(username);
+        lblEmpName.setText(es.getNameEmp());
         textEmpId.setEditable(false);
-        //textEmpId.setText(idEmp);
-        checkAccount(idEmp);
+        checkAccount(es.getIdEmp());
         getRole();
     }
 
@@ -295,22 +300,27 @@ public class JIAccount extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Silahkan isi semua data terlebih dahulu");
 
         } else if (comboBoxRole.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null, "Anda belum memilih Country");
+            JOptionPane.showMessageDialog(null, "Anda belum memilih Role untuk Employee");
 
         } else {
             int confirm = JOptionPane.showConfirmDialog(this, "Apakah anda yakin ingin menyimpan data? ", "confirm Save ", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (confirm == JOptionPane.YES_OPTION) {
-//                System.out.println(textEmpId.getText());
-//                System.out.println(textUsername.getText());
-//                System.out.println(textPassword.getText());
                 String password = String.valueOf(textPassword.getPassword());
                 JOptionPane.showMessageDialog(null, iac.save(textEmpId.getText(), textUsername.getText(), password));
+                String idRole = "";
+                
+                for (Role role : irc.search(comboBoxRole.getSelectedItem().toString())) {
+                    idRole = String.valueOf(role.getId());
+                }
+                
+                ierc.save(String.valueOf("0"), idRole, es.getIdEmp());
+                //ierc.save(title, title, title)
                 String id = textEmpId.getText();
                 Employee employee = iec.getById(id);
                 String email = employee.getEmail();
                 String username = textUsername.getText();
                 String name = employee.getFirstName()+" "+employee.getLastName();
-                sendMail(email, username, password, name);
+//                sendMail(email, username, password, name);
                 //updateTableEmp("");
                 //resetTextAccount();
             }

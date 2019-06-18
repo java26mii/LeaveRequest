@@ -198,13 +198,14 @@ public class JLogin extends javax.swing.JFrame {
                 if (emp != null) {
                     id = String.valueOf(emp.getId());
                     user = emp.getFirstName()+" "+emp.getLastName();
-                    
                 }
             }
+            
             EmployeeSession emps = new EmployeeSession(id, user);
             JHomeEmployee jHomeEmployee = new JHomeEmployee();
             jHomeEmployee.setVisible(true);
             this.dispose();
+            
         } else {
             JOptionPane.showMessageDialog(null, result);
         }
