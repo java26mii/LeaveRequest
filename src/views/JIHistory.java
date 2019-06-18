@@ -9,8 +9,14 @@ import controllers.EmployeeController;
 import controllers.LeaveRequestController;
 import icontrollers.IEmployeeController;
 import icontrollers.ILeaveRequestController;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import models.Employee;
 import models.EmployeeSession;
+import models.LeaveRequest;
 import org.hibernate.SessionFactory;
 import tools.HibernateUtil;
 
@@ -28,6 +34,7 @@ public class JIHistory extends javax.swing.JInternalFrame {
     String id = employeeSession.getIdEmp();
     String name = employeeSession.getNameEmp();
     Employee employee = iac.getById(id);
+    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
     /**
      * Creates new form JIHistory
@@ -35,12 +42,27 @@ public class JIHistory extends javax.swing.JInternalFrame {
     public JIHistory() {
         initComponents();
         lblGreeting.setText("Hai " + name + " !");
-//        txtId.setText(id);
-//        txtStartDate.setText(employee);
-//        txtStartDate.setDateFormatString("MM/dd/yyyy");
-//        txtEndDate.setText(to);
-//        txtNotes.setText(notes);
-//        txtStatus.setText(status);
+        showTableDepartment("");
+    }
+
+    public void showTableDepartment(String key) {
+        DefaultTableModel model = (DefaultTableModel) tblInformation.getModel();
+        model.setRowCount(0);
+        Object[] row = new Object[4];
+        List<LeaveRequest> leaveRequests = new ArrayList<>();
+        for (LeaveRequest leaveRequest : ilrc.search(id)) {
+            if (key == "") {
+                leaveRequests = ilrc.getAll();
+            }
+            for (int i = 0; i < leaveRequests.size(); i++) {
+                row[0] = i + 1;
+                row[1] = leaveRequests.get(i).getId();
+                row[2] = formatter.format(leaveRequests.get(i).getStartDate());
+                row[3] = formatter.format(leaveRequests.get(i).getEndDate());
+                model.addRow(row);
+            }
+
+        }
     }
 
     /**
@@ -59,6 +81,9 @@ public class JIHistory extends javax.swing.JInternalFrame {
         lblGreeting = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblInformation = new javax.swing.JTable();
 
         setClosable(true);
         setMaximizable(true);
@@ -99,21 +124,57 @@ public class JIHistory extends javax.swing.JInternalFrame {
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel33.setText("Requester Information");
 
+        tblInformation.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "No", "ID - Leave Request", "Start Date", "End Date", "Total Leave", "Status"
+            }
+        ));
+        tblInformation.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblInformationMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblInformation);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 758, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(73, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(308, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addComponent(jLabel33)
-                .addContainerGap(876, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel33))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(jLabel33)
-                .addContainerGap(663, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(180, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -122,26 +183,25 @@ public class JIHistory extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 347, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel7)
-                        .addGap(333, 333, 333))
+                        .addGap(718, 718, 718))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(192, 192, 192)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblGreeting)
-                                .addGap(17, 17, 17)))
-                        .addGap(330, 330, 330))))
+                            .addComponent(lblGreeting)
+                            .addComponent(jLabel13))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,21 +211,31 @@ public class JIHistory extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
                         .addComponent(jLabel13)
                         .addGap(18, 18, 18)
-                        .addComponent(lblGreeting))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(252, Short.MAX_VALUE))
+                        .addComponent(lblGreeting)))
+                .addContainerGap(227, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblInformationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblInformationMouseClicked
+        DefaultTableModel model = (DefaultTableModel) tblInformation.getModel();
+        int SelectRowIndex = tblInformation.getSelectedRow();
+        showTableDepartment(id);
+//        txtDepartment_Id.setText(model.getValueAt(SelectRowIndex, 1).toString());
+//        txtDepartment_Name.setText(model.getValueAt(SelectRowIndex, 2).toString());
+//        cmbManager.setSelectedItem(model.getValueAt(SelectRowIndex, 3).toString());
+//        cmbLocation.setSelectedItem(model.getValueAt(SelectRowIndex, 4).toString()); 
+    }//GEN-LAST:event_tblInformationMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -174,7 +244,10 @@ public class JIHistory extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblGreeting;
+    private javax.swing.JTable tblInformation;
     // End of variables declaration//GEN-END:variables
 }
